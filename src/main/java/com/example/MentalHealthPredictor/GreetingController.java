@@ -1,4 +1,4 @@
-package com.example.serving_web_content;
+package com.example.MentalHealthPredictor;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -1,4 +1,4 @@
-package com.example.serving_web_content;
+package com.example.MentalHealthPredictor;
 
 public class RandomForestAlgorithm {
     
