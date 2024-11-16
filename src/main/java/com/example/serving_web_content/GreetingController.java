@@ -24,6 +24,6 @@ class ModelController{
 	
 }
 
-class ThisISWorking{
+class Nooo{
 	
 }
