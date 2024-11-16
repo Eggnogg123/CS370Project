@@ -19,3 +19,7 @@ public class GreetingController {
 class Survey_Response{
 	
 }
+
+class ModelController{
+	
+}
