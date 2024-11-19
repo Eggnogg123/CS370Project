@@ -1,3 +1,67 @@
 body{
-    background-color: rgb(145, 251, 255);
+    /* background: radial-gradient(ellipse at top, #e66465, transparent),
+            radial-gradient(ellipse at bottom, #4d9f0c, transparent); */
+    /* background-color: rgb(145, 251, 255); */
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('StressedMan.jpg');
+    background-size: cover;
+     
 }
+
+.moving-text {
+    margin: 0;
+    --bg-size: 400%;
+    --color-one: hsl(15, 100%, 50%);
+    --color-two: hsl(40 95% 55%);
+    font-size: clamp(3rem, 25vmin, 8rem);
+    background: linear-gradient(
+                90deg,
+                var(--color-one),
+                var(--color-two),
+                var(--color-one)
+              ) 0 0 / var(--bg-size) 100%;
+              color: transparent;
+              -webkit-background-clip: text;
+              background-clip: text;
+              animation: move-bg 25s infinite linear;
+}
+
+.para{
+    max-width: 50vw;
+    --bg-size: 400%;
+    --color-one: hsl(15, 100%, 50%);
+    --color-two: hsl(40 95% 55%);
+    background: linear-gradient(
+                90deg,
+                var(--color-one),
+                var(--color-two),
+                var(--color-one)
+              ) 0 0 / var(--bg-size) 100%;
+              color: transparent;
+              -webkit-background-clip: text;
+              background-clip: text;
+              animation: move-bg 25s infinite linear;
+}
+
+.sub-header{
+    --bg-size: 400%;
+    --color-one: hsl(15, 100%, 50%);
+    --color-two: hsl(40 95% 55%);
+    background: linear-gradient(
+                90deg,
+                var(--color-one),
+                var(--color-two),
+                var(--color-one)
+              ) 0 0 / var(--bg-size) 100%;
+              color: transparent;
+              -webkit-background-clip: text;
+              background-clip: text;
+              animation: move-bg 25s infinite linear;
+}
+
+@keyframes move-bg {
+    to {
+      background-position: var(--bg-size) 0;
+    }
+}
+
+
