@@ -4,7 +4,7 @@ body{
     /* background-color: rgb(145, 251, 255); */
     background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('StressedMan.jpg');
     background-size: cover;
-     
+    font-size: 1.6cqw
 }
 
 .moving-text {
@@ -56,6 +56,15 @@ body{
               -webkit-background-clip: text;
               background-clip: text;
               animation: move-bg 25s infinite linear;
+}
+
+.content{
+  display: grid;
+  grid-template-columns: 75% 25%;
+}
+
+.right-content{
+  align-content: center;
 }
 
 @keyframes move-bg {

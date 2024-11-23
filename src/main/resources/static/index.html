@@ -1,31 +1,42 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="https://www.thymeleaf.org">
 <head> 
     <title>Getting Started: Serving Web Content</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- <p>Get your greeting <a href="/greeting">here</a></p> -->
+    <!--
+    <p>Get your greeting <a href="/greeting">here</a></p>
+    <p th:text="|Hello, ${name}!|" />
+    -->
     <div class = "background-image-container">
-        <h1 class = "moving-text">Mental Health Predictor</h1>
-        <h2 class = "sub-header">Welcome to the mental illness predictor</h2>
-        <p class = "para">The goal of our software is to determine the likelihood of 
-            mental health issues based on various factors like 
-            size of workplace, age, accessibility of resources, 
-            among other factors. </p>
-        <p class = "para">Data from the World Health Organization(WHO) 
-            and Center for Disease Control(C.D.C) shows 1 in 8 people 
-            have a mental illness and that over 49,000 people died by 
-            suicide in 2022—1 death every 11 minutes. Furthermore, according 
-            to the CDC using data from 27 states, 46% of suicide decedents were 
-            known to have mental health conditions. Therefore addressing the mental 
-            illness issue and raising awareness is tantamount to a healthy society. 
-            We developed a software that is powered by the random forest algorithm and 
-            fed data from the "Mental Health in Tech Survey" dataset. 
-            Our model was shown to accurately and quickly predict (change this later depending on results) 
-            the likelihood of the presence of mental illness.</p>
+        <div class = "content">
+            <div class = "left-content">
+                <h1 class = "moving-text">Mental Health Predictor</h1>
+                <h2 class = "sub-header">Welcome to the mental illness predictor</h2>
+                <p class = "para">The goal of our software is to determine the likelihood of 
+                    mental health issues based on various factors like 
+                    size of workplace, age, accessibility of resources, 
+                    among other factors. </p>
+                <p class = "para">Data from the World Health Organization(WHO) 
+                    and Center for Disease Control(C.D.C) shows 1 in 8 people 
+                    have a mental illness and that over 49,000 people died by 
+                    suicide in 2022—1 death every 11 minutes. Furthermore, according 
+                    to the CDC using data from 27 states, 46% of suicide decedents were 
+                    known to have mental health conditions. Therefore addressing the mental 
+                    illness issue and raising awareness is tantamount to a healthy society. 
+                    We developed a software that is powered by the random forest algorithm and 
+                    fed data from the "Mental Health in Tech Survey" dataset. 
+                    Our model was shown to accurately and quickly predict (change this later depending on results) 
+                    the likelihood of the presence of mental illness.</p>
+            </div>
+            <div class = "right-content">
+                <button>Discover your mental state</button>
+                
+            </div>
         </div>
+    </div>
     <!--<script src="script.js"></script>-->
 </body>
 </html>
