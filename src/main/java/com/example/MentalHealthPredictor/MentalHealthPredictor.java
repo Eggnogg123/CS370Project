@@ -9,7 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MentalHealthPredictor {
 
 	public static void main(String[] args) throws IOException {
-		SurveyResponse responseObj = new SurveyResponse("survey.csv");
+		SurveyResponse responseObj = new SurveyResponse();
+		responseObj.readData("survey.csv");
 		SpringApplication.run(MentalHealthPredictor.class, args);
 		
 	}
