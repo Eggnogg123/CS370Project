@@ -17,31 +17,18 @@ public class DataSetResponseParser{
 
 
 class SurveyResponse{
-    public SurveyResponse(){
+    public SurveyResponse(String filename) throws IOException{
+        String documentsPath = System.getProperty("user.dir")  ;
+        
 
-    }
-    public void printSer() throws IOException{
-    String documentsPath = System.getProperty("user.home") + "/Documents";
-    String filename = "survey.csv";
+        Path documentsDirectory = Paths.get(documentsPath,"src/main/resources/static");
+        Path csvPath = documentsDirectory.resolve(filename);
 
-    Path documentsDirectory = Paths.get(documentsPath);
-    Path csvPath = documentsDirectory.resolve(filename);
-
-    @SuppressWarnings("deprecation")
-    CSVParser csvParser = CSVParser.parse(
-        csvPath, 
-        Charset.defaultCharset(),
-        CSVFormat.DEFAULT.withHeader(
-        "Timestamp", "Mental Ilnness", "Age", "Gender", "Country", "state", "self_employed", 
-            "family_history", "treatment", "no_employees", "remote_work", "tech_company",
-            "benefits", "care_options", "wellness_program", "seek_help", "anonymity", "leave",
-            "mental_health_consequence", "phys_health_consequence", "coworkers", "supervisor",
-            "mental_health_interview", "phys_health_interview", "mental_vs_physical","obs_consequence" ,
-            "comments"));
-    csvParser.forEach(csvRecord -> {
-        System.out.println(csvRecord.toMap());
-    }
+	    CSVParser csvParser = CSVParser.parse(csvPath,Charset.defaultCharset(), CSVFormat.DEFAULT.withHeader());
+        csvParser.forEach(csvRecord -> {
+          System.out.println(csvRecord.toMap());
+      }
     
-    );
+      );
     }
 }
