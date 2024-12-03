@@ -13,7 +13,7 @@ public class GreetingController {
 	CurrentSessionResponses controllerobject;
 	DataSetResponseParser parser;
 	RandomForestAlgorithm alg;
-	String prediction;
+	String prediction; /*  */
 	public GreetingController() throws IOException{
 		controllerobject = new CurrentSessionResponses();
 		parser = new DataSetResponseParser("survey.csv");
@@ -23,6 +23,7 @@ public class GreetingController {
 		
 	}
 	
+	/* 
 	@GetMapping("/greeting")
 	public String greetingForm(Model model) {
 	  model.addAttribute("greeting", new Greeting());
@@ -31,9 +32,23 @@ public class GreetingController {
   
 	@PostMapping("/greeting")
 	public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) {
-	  model.addAttribute("greeting", greeting);
+	  model.addAttribute("oii", prediction);
 	  return "result";
 	}
+	*/
 
+	@GetMapping("/")
+	public String greeting() {
+	  
+	  return "greeting";
+	}
+  
+	@PostMapping("/register") 
+	public String userRegistration(@ModelAttribute Greeting greet) { 
+	  System.out.println(greet.toString());
+	  Input newobject = new Input(greet.toString());
+	  return "greeting";
+	}
+	
 }
 
