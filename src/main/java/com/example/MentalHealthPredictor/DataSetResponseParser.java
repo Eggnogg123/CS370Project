@@ -5,6 +5,7 @@ import org.apache.commons.csv.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Random;
 import java.io.IOException;
 
 import java.nio.charset.*;
@@ -13,12 +14,14 @@ import java.nio.charset.*;
 
 
 public class DataSetResponseParser{
-    SurveyResponse data;
-    int numResponses,predictedVarCol = -1;
-    String parsedData[][];
-    String parsedColumnQuestion[];
-    public DataSetResponseParser(SurveyResponse d){
-        data = d;
+    private SurveyResponse data;
+    private int numResponses,predictedVarCol = -1;
+    private String parsedData[][];
+    private String parsedColumnQuestion[];
+
+//Constructor
+    public DataSetResponseParser(String filename) throws IOException{
+        data = new SurveyResponse(filename);
         numResponses = data.getNumRows();
         for(int i =0;i<data.getNumCol();i++){
             if(data.getColumnName(i).equals("Mental Ilnness")){
@@ -33,10 +36,19 @@ public class DataSetResponseParser{
         //The parsed data array is smaller than the one in SurveyResponse, since 3 columns of data not
         //used in the algorithm get removed, invalid responses are also skipped over
         parsedData = new String[numResponses][data.getNumCol() - 3];
+        parsedColumnQuestion = new String[data.getNumCol() - 3];
+        for(int i =0,x = 0;i < parsedColumnQuestion.length;i++,x++){
+            String s = data.getColumnName(x);
+            while(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments")){
+                x++;
+                s = data.getColumnName(x);
+            }
+            parsedColumnQuestion[i] = data.getColumnName(x);
+        }
         for(int i =0,x = 0;i<data.getNumRows();i++){
             if(data.getRecord(i,predictedVarCol).equals(""))continue;
             for(int j =0,y = 0;j< data.getNumCol();j++){
-                 String s = data.getColumnName(j);
+                String s = data.getColumnName(j);
                 if(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments")){
                     continue;
                 }
@@ -48,12 +60,50 @@ public class DataSetResponseParser{
             }
             x++;
         }
-        System.out.println(parsedData[parsedData.length - 1][0]);
-        parsedColumnQuestion = new String[data.getNumCol() - 3];
         
     }
 
-    String sortGender(String in){
+// Get Number of Rows or Columns of parsed Dataset
+    public int getRows(){
+        return numResponses;
+    }
+    public int getCols(){
+        return parsedData[0].length;
+    }
+    public String getParsedColName(int in){
+        return parsedColumnQuestion[in];
+    }
+// Get a subtable of the parsed Dataset, used for bootstrap
+    public String[][] getSubTable(int rowNotUsed,int featureSelectedOut,int rows,int cols){
+        String[][] table = new String[rows][cols - 1];
+        Random rand = new Random();
+        int responseR = rowNotUsed;
+        for(int i =0;i<rows;i++){
+            responseR = rand.nextInt(rows);
+            while(responseR == rowNotUsed)
+                responseR = rand.nextInt(rows);
+            for(int j = 0,x = 0;j<table[0].length;j++,x++){
+                if(x == featureSelectedOut ){
+                    x++;
+                }
+                table[i][j] = parsedData[responseR][x];
+            }
+        }
+        return table;
+    }
+    public String[] getSubCol(int featureSelectedOut, int cols){
+        String[] table = new String[cols - 1];
+        for(int i =0,j =0;i<cols - 1;i++,j++){
+            if(j == featureSelectedOut){
+                j++;
+            } 
+            table[i] = parsedColumnQuestion[j];
+        }
+        return table;
+    }
+
+//Helps with parsing through the Gender Column of the survey
+    private String sortGender(String in){
         switch (in) {
             case "A little about you":
                 return "";
