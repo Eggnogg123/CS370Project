@@ -1,5 +1,7 @@
 package com.example.MentalHealthPredictor;
 
+import java.io.IOException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,8 +11,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class GreetingController {
 	CurrentSessionResponses controllerobject;
-	public GreetingController(CurrentSessionResponses in){
-		controllerobject = in;
+	DataSetResponseParser parser;
+	RandomForestAlgorithm alg;
+	public GreetingController() throws IOException{
+		controllerobject = new CurrentSessionResponses();
+		parser = new DataSetResponseParser("survey.csv");
+		alg = new RandomForestAlgorithm(parser);
+		alg.buildRandomForest();
+		
 	}
 	
 	@GetMapping("/greeting")

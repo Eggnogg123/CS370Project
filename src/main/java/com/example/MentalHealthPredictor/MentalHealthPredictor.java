@@ -9,14 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MentalHealthPredictor {
 
 	public static void main(String[] args) throws IOException {
-		DataSetResponseParser parser = new DataSetResponseParser("survey.csv");
-		RandomForestAlgorithm alg = new RandomForestAlgorithm(parser);
-		alg.buildRandomForest();
-		
-		CurrentSessionResponses someobject = new CurrentSessionResponses();
-		CurrentSessionResponses[] arr = new CurrentSessionResponses[1] ;
-		arr[0] = someobject;
-		SpringApplication.run(MentalHealthPredictor.class, arr);
+		SpringApplication.run(MentalHealthPredictor.class, args);
 	}
 
 }

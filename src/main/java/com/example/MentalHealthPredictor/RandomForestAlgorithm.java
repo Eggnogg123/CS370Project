@@ -17,7 +17,7 @@ public class RandomForestAlgorithm {
             bootStrapData(i, col);
             
             //This CODE below prints out all the bootstrapped Datasets
-            // for(int j =0;j<table.length;j++){
+            // for(int j =0;j<1;j++){
             //     for(int x =0;x<table[0].length;x++){
             //         System.out.print(table[j][x] + "  ");
             //     }
