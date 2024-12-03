@@ -12,8 +12,11 @@ public class MentalHealthPredictor {
 		DataSetResponseParser parser = new DataSetResponseParser("survey.csv");
 		RandomForestAlgorithm alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();
-		SpringApplication.run(MentalHealthPredictor.class, args);
 		
+		CurrentSessionResponses someobject = new CurrentSessionResponses();
+		CurrentSessionResponses[] arr = new CurrentSessionResponses[1] ;
+		arr[0] = someobject;
+		SpringApplication.run(MentalHealthPredictor.class, arr);
 	}
 
 }
