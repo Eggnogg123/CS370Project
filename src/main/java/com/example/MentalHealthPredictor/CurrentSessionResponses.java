@@ -5,9 +5,6 @@ public class CurrentSessionResponses {
     private String[] inputs;
     private String[] questions;
 
-    public CurrentSessionResponses(){
-    }
-
     public CurrentSessionResponses(int counter){
         inputs = new String[counter];
         questions = new String[counter];
