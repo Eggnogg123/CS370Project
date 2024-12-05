@@ -15,186 +15,162 @@
     -->
 
     <form action ="register" method="post">
+
         <label for="firstquestion" th:text="${question1}">First question: </label><br/>
-        <select name = "ques1">
-            <option value = "yes" th:text="${choice11}">Yes</option>
-            <option value = "no" th:text="${choice12}">No</option>
-        </select>
+        <input type="text" name = "ques1" id = "ques1">
 
         <br/>
 
-        <label for="secondquestion" th:text="${question2}" >Second question: </label><br/>
+        <label for="secondquestion" th:text="${question2}">Second question: </label><br/>
         <select name = "ques2">
-            <option value ="yes" th:text="${choice21}">Yes</option>
-            <option value = "no" th:text="${choice22}">No</option>
+            <option th:each="option : ${options2}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
         
-        <label for="thirdquestion">Third question: </label><br/>
+        <label for="thirdquestion" th:text="${question3}">Third question: </label><br/>
         <select name = "ques3">
-            <option value ="yes" th:text="${choice31}">Yes</option>
-            <option value = "no" th:text="${choice32}">No</option>
+            <option th:each="option : ${options3}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="fourthquestion">Fourth question: </label><br/>
+        <label for="fourthquestion" th:text="${question4}">Fourth question: </label><br/>
         <select name = "ques4">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options4}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="fifthquestion">Fifth question: </label><br/>
+        <label for="fifthquestion" th:text="${question5}">Fifth question: </label><br/>
         <select name = "ques5">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options5}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="sixthquestion">Sixth question: </label><br/>
+        <label for="sixthquestion" th:text="${question6}">Sixth question: </label><br/>
         <select name = "ques6">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options6}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="seventhquestion">Seventh question: </label><br/>
+        <label for="seventhquestion" th:text="${question7}">Seventh question: </label><br/>
         <select name = "ques7">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options7}" th:value="${option}" th:text="${option}"></option>
         </select>
         
         <br/>
 
-        <label for="eighthquestion">Eighth question: </label><br/>
+        <label for="eighthquestion" th:text="${question8}">Eighth question: </label><br/>
         <select name = "ques8">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options8}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="ninthquestion">Ninth question: </label><br/>
+        <label for="ninthquestion" th:text="${question9}">Ninth question: </label><br/>
         <select name = "ques9">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options9}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="tenthquestion">Tenth question: </label><br/>
+        <label for="tenthquestion" th:text="${question10}">Tenth question: </label><br/>
         <select name = "ques10">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options10}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="eleventhquestion">Eleventh question: </label><br/>
+        <label for="eleventhquestion" th:text="${question11}">Eleventh question: </label><br/>
         <select name = "ques11">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options11}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="twelfthquestion">Twelfth question: </label><br/>
+        <label for="twelfthquestion" th:text="${question12}">Twelfth question: </label><br/>
         <select name = "ques12">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options12}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="twelfthquestion">Thirteenth question: </label><br/>
+        <label for="twelfthquestion" th:text="${question13}">Thirteenth question: </label><br/>
         <select name = "ques13">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options13}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="fourteenthquestion">Fourteenth question: </label><br/>
+        <label for="fourteenthquestion" th:text="${question14}">Fourteenth question: </label><br/>
         <select name = "ques14">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options14}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="fifteenthquestion">Fifteenth question: </label><br/>
+        <label for="fifteenthquestion" th:text="${question15}">Fifteenth question: </label><br/>
         <select name = "ques15">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options15}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="sixteenththquestion">sixteenth question: </label><br/>
+        <label for="sixteenththquestion" th:text="${question16}">sixteenth question: </label><br/>
         <select name = "ques16">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options16}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="seventeenthquestion">Seventeenth question: </label><br/>
+        <label for="seventeenthquestion" th:text="${question17}">Seventeenth question: </label><br/>
         <select name = "ques17">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options17}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="eighteenthquestion">Eighteenth question: </label><br/>
+        <label for="eighteenthquestion"th:text="${question18}">Eighteenth question: </label><br/>
         <select name = "ques18">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options18}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="nineteenthquestion">Nineteenth question: </label><br/>
+        <label for="nineteenthquestion" th:text="${question19}">Nineteenth question: </label><br/>
         <select name = "ques19">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options19}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="twentitethquestion">Twentiteth question: </label><br/>
+        <label for="twentitethquestion" th:text="${question20}">Twentiteth question: </label><br/>
         <select name = "ques20">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options20}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="twentifirstquestion">Twentifirst question: </label><br/>
+        <label for="twentifirstquestion" th:text="${question21}">Twentifirst question: </label><br/>
         <select name = "ques21">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options21}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="twentisecondquestion">Twentisecond question: </label><br/>
+        <label for="twentisecondquestion" th:text="${question22}">Twentisecond question: </label><br/>
         <select name = "ques22">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options22}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
 
-        <label for="twentithirdquestion">Twentithird question: </label><br/>
+        <label for="twentithirdquestion" th:text="${question23}">Twentithird question: </label><br/>
         <select name = "ques23">
-            <option value ="yes">Yes</option>
-            <option value = "no">No</option>
+            <option th:each="option : ${options23}" th:value="${option}" th:text="${option}"></option>
         </select>
 
         <br/>
@@ -202,6 +178,6 @@
 
         <button type = "submit">Submit</button>
     </form>
-
+    <script src="greeting.js"></script>
 </body>
 </html>

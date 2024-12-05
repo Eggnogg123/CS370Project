@@ -124,8 +124,8 @@ public class Greeting { /*This is our model class */
 
     @Override /* This is simply to print out the values the user chooses for each question */
     public String toString(){
-        //return "User [fques=" + fques + "]";
-        return "User [ques15=" + ques15 + ", ques22=" + ques22 + "]" ;
+        return "User [ques1=" + ques1 + "]";
+        //return "User [ques15=" + ques15 + ", ques22=" + ques22 + "]" ;
     }
 
     // public String toString(){ //gonna try to convert toString to print only the answers we want could be used to send data to other classes
