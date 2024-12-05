@@ -122,6 +122,9 @@ public class DataSetResponseParser{
         }
         return parsedColumnQuestions[num];
     }
+    public Set<String> getChoices(String question){
+        return parsedQuestionChoices.get(question);
+    }
 //CHANGES TO THE QUESTIONS GO HERE and ANSWERS GO HERE
     private void buildQuestionsChoices(int columns){
         parsedColumnQuestions = new String[columns];
