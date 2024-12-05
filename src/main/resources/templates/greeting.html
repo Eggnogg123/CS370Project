@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Form</h1>
+	<h1>Mental Health Predictor</h1>
     <!--
     <form action="#" th:action="@{/greeting}" th:object="${greeting}" method="post">
     	<p>Id: <input type="text" th:field="*{id}" /></p>
@@ -15,11 +15,191 @@
     -->
 
     <form action ="register" method="post">
-        <label for="firstquestion">First question: </label><br/>
-        <select name = "fques">
+        <label for="firstquestion" th:text="${question1}">First question: </label><br/>
+        <select name = "ques1">
+            <option value = "yes" th:text="${choice11}">Yes</option>
+            <option value = "no" th:text="${choice12}">No</option>
+        </select>
+
+        <br/>
+
+        <label for="secondquestion" th:text="${question2}" >Second question: </label><br/>
+        <select name = "ques2">
+            <option value ="yes" th:text="${choice21}">Yes</option>
+            <option value = "no" th:text="${choice22}">No</option>
+        </select>
+
+        <br/>
+        
+        <label for="thirdquestion">Third question: </label><br/>
+        <select name = "ques3">
+            <option value ="yes" th:text="${choice31}">Yes</option>
+            <option value = "no" th:text="${choice32}">No</option>
+        </select>
+
+        <br/>
+
+        <label for="fourthquestion">Fourth question: </label><br/>
+        <select name = "ques4">
             <option value ="yes">Yes</option>
             <option value = "no">No</option>
         </select>
+
+        <br/>
+
+        <label for="fifthquestion">Fifth question: </label><br/>
+        <select name = "ques5">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="sixthquestion">Sixth question: </label><br/>
+        <select name = "ques6">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="seventhquestion">Seventh question: </label><br/>
+        <select name = "ques7">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+        
+        <br/>
+
+        <label for="eighthquestion">Eighth question: </label><br/>
+        <select name = "ques8">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="ninthquestion">Ninth question: </label><br/>
+        <select name = "ques9">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="tenthquestion">Tenth question: </label><br/>
+        <select name = "ques10">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="eleventhquestion">Eleventh question: </label><br/>
+        <select name = "ques11">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="twelfthquestion">Twelfth question: </label><br/>
+        <select name = "ques12">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="twelfthquestion">Thirteenth question: </label><br/>
+        <select name = "ques13">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="fourteenthquestion">Fourteenth question: </label><br/>
+        <select name = "ques14">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="fifteenthquestion">Fifteenth question: </label><br/>
+        <select name = "ques15">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="sixteenththquestion">sixteenth question: </label><br/>
+        <select name = "ques16">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="seventeenthquestion">Seventeenth question: </label><br/>
+        <select name = "ques17">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="eighteenthquestion">Eighteenth question: </label><br/>
+        <select name = "ques18">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="nineteenthquestion">Nineteenth question: </label><br/>
+        <select name = "ques19">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="twentitethquestion">Twentiteth question: </label><br/>
+        <select name = "ques20">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="twentifirstquestion">Twentifirst question: </label><br/>
+        <select name = "ques21">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="twentisecondquestion">Twentisecond question: </label><br/>
+        <select name = "ques22">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+
+        <label for="twentithirdquestion">Twentithird question: </label><br/>
+        <select name = "ques23">
+            <option value ="yes">Yes</option>
+            <option value = "no">No</option>
+        </select>
+
+        <br/>
+        <br/>
+
         <button type = "submit">Submit</button>
     </form>
 
