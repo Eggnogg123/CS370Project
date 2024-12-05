@@ -106,6 +106,13 @@ public class DataSetResponseParser{
             x++;
         }
     }
+    public String getQuestion(int num){
+        if( num < 0 || num > 22){
+            System.out.println("INVALID QUESTION QUERY");
+            System.exit(0);
+        }
+        return parsedColumnQuestions[num];
+    }
 //CHANGES TO THE QUESTIONS GO HERE
     private void buildQuestions(int columns){
         parsedColumnQuestions = new String[columns];

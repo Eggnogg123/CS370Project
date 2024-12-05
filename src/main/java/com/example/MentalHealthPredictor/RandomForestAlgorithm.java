@@ -32,7 +32,7 @@ public class RandomForestAlgorithm {
             //     System.out.print(variables[j] + "  ");
             // }
             // System.out.println(variables.length);
-            // System.out.println(data.getParsedColName(col));
+            // System.out.println(data.getParsedColName(ignoreCol));
         }   
 
     }
@@ -52,7 +52,7 @@ public class RandomForestAlgorithm {
         variables = data.getSubCol(colNotUsed,data.getCols());
         return;
     }
-
+    
 }
 
 class DecisionTree{
