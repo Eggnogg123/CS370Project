@@ -6,8 +6,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.HashMap;
+import java.util.Map;
 import java.io.IOException;
-
 import java.nio.charset.*;
 
 
@@ -17,7 +20,7 @@ public class DataSetResponseParser{
     private SurveyResponse data;
     private int numResponses,predictedVarCol = -1;
     private String parsedData[][],parsedColumnName[],parsedColumnQuestions[];
-
+    private Map<String,Set<String>> parsedQuestionChoices;
 //Constructor
     public DataSetResponseParser(String filename) throws IOException{
         data = new SurveyResponse(filename);
@@ -29,8 +32,14 @@ public class DataSetResponseParser{
             }
         }
         parseResponse();
-        buildQuestions(parsedColumnName.length - 1);
-        for(int i =0;i<parsedColumnQuestions.length;i++)System.out.println(parsedColumnQuestions[i]);
+        buildQuestionsChoices(parsedColumnName.length - 1);
+        for(int i =0;i<parsedColumnQuestions.length;i++){
+            Set<String> apple = parsedQuestionChoices.get(parsedColumnQuestions[i]);
+            for(String a:apple){
+                System.out.print(a + " ");
+            }
+            System.out.println();
+        }
         
     }
 
@@ -113,80 +122,196 @@ public class DataSetResponseParser{
         }
         return parsedColumnQuestions[num];
     }
-//CHANGES TO THE QUESTIONS GO HERE
-    private void buildQuestions(int columns){
+//CHANGES TO THE QUESTIONS GO HERE and ANSWERS GO HERE
+    private void buildQuestionsChoices(int columns){
         parsedColumnQuestions = new String[columns];
+        parsedQuestionChoices = new HashMap<>();
 //IMPORTANT- IN THE EVENT THAT SURVEY COLUMN ORDER IS CHANGED THIS WILL OUTPUT AN ERROR
         for(int i = 0,j = 1;i< parsedColumnQuestions.length;i++,j++){
+            Set<String> temp = new HashSet<>();
             switch (parsedColumnName[j]) {
                 case "Age":
                 parsedColumnQuestions[i] = "What is your Age?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                parsedQuestionChoices.get(parsedColumnQuestions[i]).add("RANGEBASED");
                 break;
                 case "Gender":
                 parsedColumnQuestions[i] = "What is your Gender?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "Country":
                 parsedColumnQuestions[i] = "What is your Country of Residence?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "state":
                 parsedColumnQuestions[i] = "If you live in the US, what is your State of residence?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "self_employed":
                 parsedColumnQuestions[i] = "Are you currently self-employed or not?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "family_history":
                 parsedColumnQuestions[i] = "Do you have a family history of mental illness?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
+                parsedQuestionChoices.get(parsedColumnQuestions[i]).add("Don't Know");
                 break;
                 case "no_employees":
                 parsedColumnQuestions[i] = "How many employees does your company or organization have?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "remote_work":
                 parsedColumnQuestions[i] = "Do you work remotely (outside of an office) at least 50% of the time?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "tech_company":
                 parsedColumnQuestions[i] = "Is your employer primarily a tech company/organization?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
+                parsedQuestionChoices.get(parsedColumnQuestions[i]).add("Don't Know");
                 break;
                 case "benefits":
                 parsedColumnQuestions[i] = "Does your employer provide mental health benefits?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "care_options":
                 parsedColumnQuestions[i] = "Do you know the options for mental health care your employer provides?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "wellness_program":
                 parsedColumnQuestions[i] = "Has your employer ever discussed mental health as part of an employee wellness program?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "seek_help":
                 parsedColumnQuestions[i] = "Does your employer provide resources to learn more about mental health issues and how to seek help?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "anonymity":
                 parsedColumnQuestions[i] = "Is your anonymity protected if you choose to take advantage of mental health or substance abuse treatment resources?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "leave":
                 parsedColumnQuestions[i] = "How easy is it for you to take medical leave for a mental health condition?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "mental_health_consequence":
                 parsedColumnQuestions[i] = "Do you think that discussing a mental health issue with your employer would have negative consequences?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "phys_health_consequence":
                 parsedColumnQuestions[i] = "Do you think that discussing a physical health issue with your employer would have negative consequences?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "coworkers":
                 parsedColumnQuestions[i] = "Would you be willing to discuss a mental health issue with your coworkers?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "supervisor":
                 parsedColumnQuestions[i] = "Would you be willing to discuss a mental health issue with your direct supervisor(s)?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "mental_health_interview":
                 parsedColumnQuestions[i] = "Would you bring up a mental health issue with a potential employer in an interview?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "phys_health_interview":
                 parsedColumnQuestions[i] = "Would you bring up a physical health issue with a potential employer in an interview?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "mental_vs_physical":
                 parsedColumnQuestions[i] = "Do you feel that your employer takes mental health as seriously as physical health?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "obs_consequence":
                 parsedColumnQuestions[i] = "Have you heard of or observed negative consequences for coworkers with mental health conditions in your workplace?";
+                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 
                 default:
@@ -199,11 +324,11 @@ public class DataSetResponseParser{
     private String sortGender(String in){
         switch (in) {
             case "A little about you":
-                return "";
+                return "Other";
             case "Nah":
-                return "";
+                return "Other";
             case "p":
-                return "";
+                return "Other";
             case "Agender":
                 return "Non-Binary";
             case "Neuter":
@@ -211,13 +336,13 @@ public class DataSetResponseParser{
             case "non-binary":
                 return "Non-Binary";
             case "All":
-                return "";
+                return "Other";
             case "Androgyne":
-                return "";
+                return "Other";
             case "Enby":
                 return "Non-Binary";
             case "fluid":
-                return "";
+                return "Other";
             case "Genderqueer":
                 return "Non-Binary";
             case "queer":
