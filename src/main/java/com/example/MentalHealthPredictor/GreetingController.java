@@ -46,7 +46,6 @@ public class GreetingController {
 	@PostMapping("/register") 
 	public String userRegistration(@ModelAttribute Greeting greet) { 
 	  System.out.println(greet.toString());
-	  Input newobject = new Input(greet.toString());
 	  return "greeting";
 	}
 	
