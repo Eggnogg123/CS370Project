@@ -1,5 +1,11 @@
 package com.example.MentalHealthPredictor;
 
+import java.util.Set;
+import java.util.List;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Random;
 
 public class RandomForestAlgorithm {
@@ -20,7 +26,7 @@ public class RandomForestAlgorithm {
         for(int i = 0;i<numTrees ;i++){
             int ignoreCol = rand.nextInt(data.getCols() - 1);
             bootStrapData(i, ignoreCol);
-            forest[i] = new DecisionTree(variables,table);
+            forest[i] = new DecisionTree(variables,table,data);
             //This CODE below prints out all the bootstrapped Datasets
             // for(int j =0;j<1;j++){
             //     for(int x =0;x<table[0].length;x++){
@@ -61,22 +67,49 @@ public class RandomForestAlgorithm {
 class DecisionTree{
     String[] columnNames;
     String[][] dataset;
-    public DecisionTree(String[] variableNames,String[][] ds){
+    DataSetResponseParser choiceSource;
+    public DecisionTree(String[] variableNames,String[][] ds,DataSetResponseParser cs){
         columnNames = variableNames;
         dataset = ds;
-        makeTree();
+        choiceSource = cs;
+        Set<Integer> used = new HashSet<Integer>();
+        DecisionTreeNode root = new DecisionTreeNode();
+        makeTree(used,root);
     }
     public String makeDecision(){
         return "PLACHOLDER";
     }
-    private void makeTree(){
-        //System.out.println(dataset[0][0]);
-    }
-    private int nextTreeSplit(){
-        return 0;
+    private void makeTree(Set<Integer> used,DecisionTreeNode currNode){
+        // int use = nextTreeSplit(used,currNode);
+        // if(used.size() == 22)
+        // currNode.setQuestion(columnNames[use]);
+        // Set<String> choices = new HashSet<String>(choiceSource.getChoices(columnNames[use]));
+        // for(String i: choices){
+        //     DecisionTreeNode curr = new DecisionTreeNode();
+        //     curr.addChild(i,curr);
+        //     used.add(use);
+        //     makeTree(used, curr);
+        // }
+        return;
     }
 }
 
 class DecisionTreeNode{
-    
+    private String question;
+    private Map<String,DecisionTreeNode> children;
+
+    public DecisionTreeNode(){
+        children = new HashMap<String,DecisionTreeNode>();
+    }
+    public void setQuestion(String input){
+        question = input;
+        return;
+    }
+    public String getQuestion(){ 
+        return question;
+    }
+    public void addChild(String ans,DecisionTreeNode input){
+        children.put(ans, input);
+        return;
+    }
 }
