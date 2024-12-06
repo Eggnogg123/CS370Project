@@ -36,7 +36,7 @@ public class RandomForestAlgorithm {
         }   
 
     }
-    public String makePrediction(){
+    public String makePrediction(CurrentSessionReponses current){
         int YesC = 0, NoC = 0;
         for(int i = 0;i< forest.length;i++){
             if(forest[i].makeDecision().equals("PLACHOLDER"))YesC++;
