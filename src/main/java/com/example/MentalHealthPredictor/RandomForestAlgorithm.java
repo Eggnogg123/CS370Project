@@ -18,7 +18,7 @@ public class RandomForestAlgorithm {
         forest = new DecisionTree[data.getRows()];
         numTrees = data.getRows();
         for(int i = 0;i<numTrees ;i++){
-            int ignoreCol = rand.nextInt(data.getCols() - 1) + 1;
+            int ignoreCol = rand.nextInt(data.getCols() - 1);
             bootStrapData(i, ignoreCol);
             forest[i] = new DecisionTree(variables,table);
             //This CODE below prints out all the bootstrapped Datasets
@@ -34,7 +34,10 @@ public class RandomForestAlgorithm {
             // System.out.println(variables.length);
             // System.out.println(data.getParsedColName(ignoreCol));
         }   
-
+        for(int i = 0;i<table[0].length;i++){
+            System.out.println(variables[i]);
+            System.out.println(table[0][i]);
+        }
     }
     public String makePrediction(CurrentSessionReponses current){
         int YesC = 0, NoC = 0;
@@ -63,11 +66,14 @@ class DecisionTree{
         dataset = ds;
         makeTree();
     }
+    public String makeDecision(){
+        return "PLACHOLDER";
+    }
     private void makeTree(){
         //System.out.println(dataset[0][0]);
     }
-    public String makeDecision(){
-        return "PLACHOLDER";
+    private int nextTreeSplit(){
+        return 0;
     }
 }
 

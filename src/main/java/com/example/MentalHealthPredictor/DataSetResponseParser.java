@@ -26,14 +26,7 @@ public class DataSetResponseParser{
             }
         }
         parseResponse();
-        buildQuestionsChoices(parsedColumnName.length - 1);
-        for(int i =0;i<parsedColumnQuestions.length;i++){
-            Set<String> apple = parsedQuestionChoices.get(parsedColumnQuestions[i]);
-            for(String a:apple){
-                System.out.print(a + " ");
-            }
-            System.out.println();
-        }
+        buildQuestionsChoices(parsedColumnName.length - 1);        
         
     }
 
@@ -47,7 +40,8 @@ public class DataSetResponseParser{
     public String getParsedColName(int in){
         return parsedColumnName[in];
     }
-// Get a subtable of the parsed Dataset, used for bootstrap
+// Get a subtable of the parsed Dataset, used for bootstrap,
+//column  0 of the subtable is the MentalIllness Column for the Yes or No Question
     public String[][] getSubTable(int rowNotUsed,int featureSelectedOut,int rows,int cols){
         String[][] table = new String[rows][cols - 1];
         Random rand = new Random();
@@ -65,13 +59,16 @@ public class DataSetResponseParser{
         }
         return table;
     }
+//Get a array of Variable Names/Questions for bootstrapped data
+//Column 0 is the Mentall Illness Column, IF WE CHANGE THE ORDER OF THE SURVEY FILE VARIABLES THIS MAY BREAK
     public String[] getSubCol(int featureSelectedOut, int cols){
         String[] table = new String[cols - 1];
-        for(int i =0,j =0;i<cols - 1;i++,j++){
+        table[0] = "Mental Illness";
+        for(int i =1,j = 0 ;i<cols - 1;i++,j++){
             if(j == featureSelectedOut){
                 j++;
             } 
-            table[i] = parsedColumnName[j];
+            table[i] = parsedColumnQuestions[j];
         }
         return table;
     }
@@ -102,6 +99,9 @@ public class DataSetResponseParser{
                 }
                 if(s.equals("Gender")){
                     parsedData[x][y] = sortGender(data.getRecord(i, j));    
+                }
+                else if(s.equals("Mental Ilnness")){
+                    parsedData[x][y] = sortMentalIllness(data.getRecord(i, j));
                 }
                 else parsedData[x][y] = data.getRecord(i, j);
                 y++;
@@ -318,6 +318,24 @@ public class DataSetResponseParser{
         }
     }
 //Helps with parsing through the Gender Column of the survey
+    private String sortMentalIllness(String in){
+        switch (in) {
+            case "NA":
+                return "No";
+            case "Sometimes":
+                return "Yes";
+            case "Often":
+                return "Yes";
+            case "Rarely":
+                return "Yes";
+            case "Never":
+                return "Yes";
+            default:
+                System.out.println("Error in Determining Mentall Illness for all Survey Responses");
+                System.exit(0);
+        }
+        return "NULL";
+    }
     private String sortGender(String in){
         switch (in) {
             case "A little about you":
