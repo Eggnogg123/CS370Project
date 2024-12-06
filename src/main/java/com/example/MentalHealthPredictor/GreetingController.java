@@ -17,7 +17,7 @@ public class GreetingController {
 	RandomForestAlgorithm alg;
 	String prediction; /*  */
 	public GreetingController() throws IOException{
-		controllerobject = new CurrentSessionResponses(23);
+		controllerobject = new CurrentSessionResponses();
 		parser = new DataSetResponseParser("survey.csv");
 		alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();

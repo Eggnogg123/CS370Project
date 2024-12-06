@@ -1,18 +1,21 @@
 package com.example.MentalHealthPredictor;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class CurrentSessionResponses {      
-    private String[] inputs;
-    private String[] questions;
+    private Map<String,String> QuestionInputs;
 
-    public CurrentSessionResponses(int counter){
-        inputs = new String[counter];
-        questions = new String[counter];
+    public CurrentSessionResponses(){
+        QuestionInputs = new HashMap<String,String>();
 
+    }
+
+    public void recordInput(String Question,String Answer){
+        QuestionInputs.put(Question,Answer);
     }
 
 
 
-    //a method that takes in a input object and it gets the user input and corresponding question from the object
 }
 
