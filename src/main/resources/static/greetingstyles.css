@@ -1,0 +1,63 @@
+body{
+    --color-one: hsl(15, 100%, 50%);
+    --color-two: hsl(40 95% 55%);
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('StressedMan.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 1.8cqw;
+    margin:0;
+    height:auto;
+    display:grid;
+    justify-content: center; /*center hor*/
+    align-items: center; /* center vert*/
+
+    
+}
+
+h1{
+    max-width: 50vw;
+    --bg-size: 400%;
+    --color-one: hsl(15, 100%, 50%);
+    --color-two: hsl(40 95% 55%);
+    background: linear-gradient(
+                90deg,
+                var(--color-one),
+                var(--color-two),
+                var(--color-one)
+              ) 0 0 / var(--bg-size) 100%;
+              color: transparent;
+              -webkit-background-clip: text;
+              background-clip: text;
+              animation: move-bg 25s infinite linear;
+}
+
+
+
+form {
+    /* border: 1px solid black; */
+    max-width: 50vw;
+    --bg-size: 400%;
+    --color-one: hsl(15, 100%, 50%);
+    --color-two: hsl(40 95% 55%);
+    background: linear-gradient(
+                90deg,
+                var(--color-one),
+                var(--color-two),
+                var(--color-one)
+              ) 0 0 / var(--bg-size) 100%;
+              color: transparent;
+              -webkit-background-clip: text;
+              background-clip: text;
+              animation: move-bg 25s infinite linear;
+}
+
+
+select{
+    background-color: orange;
+    border:2px solid black;
+}
+
+input{
+    background-color: orange;
+    border:2px solid black;
+}

@@ -42,7 +42,7 @@ public class GreetingController {
 	    return "index";
 	}//end of GetMapping
   
-	@PostMapping("/register") 
+	@PostMapping("/feedback") 
 	public String userRegistration(@ModelAttribute CurrentSessionReponses greet, Model model) { //links to model class which is Greeting.java
 	  for(int i=0;i<23;i++){
 		System.out.println(parser.getQuestion(i));
