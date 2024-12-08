@@ -39,15 +39,18 @@ public class GreetingController {
  
 	@GetMapping("/")
 	public String greeting(Model model,@ModelAttribute CurrentSessionReponses greet) {
+		
 	    return "index";
 	}//end of GetMapping
   
 	@PostMapping("/feedback") 
 	public String userRegistration(@ModelAttribute CurrentSessionReponses greet, Model model) { //links to model class which is Greeting.java
-	  for(int i=0;i<23;i++){
-		System.out.println(parser.getQuestion(i));
-		System.out.println(greet.getAnswer(i));
-	  }
+	//   for(int i=0;i<23;i++){
+	// 	System.out.println(parser.getQuestion(i));
+	// 	System.out.println(greet.getAnswer(greet.getQuestion(i)));
+		
+	//   }
+	  greet.setQuestions(parser);
 	  System.out.println(alg.makePrediction(greet));
 	  return "result";
 	}
@@ -59,6 +62,7 @@ public class GreetingController {
 			model.addAttribute("question" + i,parser.getQuestion(i-1));
 			model.addAttribute("options" + i, parser.getChoices(parser.getQuestion(i-1)));
 		}		
+		
 			return "greeting";
 		}//end of GetMapping
 

@@ -51,7 +51,7 @@ public class DataSetResponseParser{
             while(responseR == rowNotUsed)
                 responseR = rand.nextInt(rows);
             for(int j = 0,x = 0;j<table[0].length;j++,x++){
-                if(x == featureSelectedOut ){
+                if(x == featureSelectedOut + 1){
                     x++;
                 }
                 table[i][j] = parsedData[responseR][x];

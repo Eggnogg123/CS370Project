@@ -44,15 +44,15 @@ public class RandomForestAlgorithm {
             // System.out.println(variables.length);
             // System.out.println(data.getParsedColName(ignoreCol));
         }   
-        for(int i = 0;i<table[0].length;i++){
-            System.out.println(variables[i]);
-            System.out.println(table[0][i]);
-        }
+        // for(int i = 0;i<table[0].length;i++){
+        //     System.out.println(variables[i]);
+        //     System.out.println(table[0][i]);
+        // }
     }
     public String makePrediction(CurrentSessionReponses current){
         int YesC = 0, NoC = 0;
         for(int i = 0;i< forest.length;i++){
-            if(forest[i].makeDecision().equals("PLACHOLDER"))YesC++;
+            if(forest[i].makeDecision(current).equals("PLACHOLDER"))YesC++;
             else NoC++;
         }
         if(YesC > NoC) return "YES";
@@ -72,38 +72,83 @@ class DecisionTree{
     String[] columnNames;
     String[][] dataset; //dataset that his tree has to use col1 should be age col
     DataSetResponseParser choiceSource; 
+    DecisionTreeNode root;
 
     public DecisionTree(String[] variableNames,String[][] ds,DataSetResponseParser cs){
         columnNames = variableNames;
         dataset = ds;
         choiceSource = cs;
-        Set<Integer> used = new HashSet<Integer>();
-        DecisionTreeNode root = new DecisionTreeNode();
-        makeTree(used,root);
+        Set<Integer> usedQ = new HashSet<Integer>();
+        usedQ.add(1);
+    //    usedQ.add(3);
+        Set<Integer> usedR = new HashSet<Integer>();
+        root = new DecisionTreeNode();
+        makeTree(usedQ,usedR,root);
+        //System.out.println(root.getQuestion());
+        return;
     }//end of constructor
 
-    private void makeTree(Set<Integer> used,DecisionTreeNode currNode){
-        // int use = nextTreeSplit(used,currNode);
-        // if(used.size() == 22)
-        // currNode.setQuestion(columnNames[use]);
-        // Set<String> choices = new HashSet<String>(choiceSource.getChoices(columnNames[use]));
-        // for(String i: choices){
-        //     DecisionTreeNode curr = new DecisionTreeNode();
-        //     curr.addChild(i,curr);
-        //     used.add(use);
-        //     makeTree(used, curr);
-        // }
+    private void makeTree(Set<Integer> usedQ,Set<Integer> usedR,DecisionTreeNode currNode){
+        int use = nextTreeSplit(usedQ,usedR);
+        
+        if(use == 0){
+            int noC = 0,yesC = 0;
+            for(int i = 0;i<dataset.length;i++){
+                if(usedR.contains(i))continue;
+                if(dataset[i][0] == "Yes")yesC++;
+                if(dataset[i][0] == "No")noC++;
+            }
+            if(yesC > noC) currNode.setPrediction("Yes");
+            currNode.setPrediction("No");
+            
+           return;
+        }
+        
+        if(use >= 100){
+            use -= 100;
+            Set<String> Finalchoices = new HashSet<String>(choiceSource.getChoices(columnNames[use]));
+            currNode.setQuestion(columnNames[use]);
+            for(String i:Finalchoices){
+                DecisionTreeNode finalNode = new DecisionTreeNode();
+                String prediction = " ";
+                for(int k =0;k<dataset.length;k++){
+                    if(usedR.contains(k))continue;
+                    if(dataset[k][use].equals(i)){
+                        prediction = dataset[k][0];
+                        break;
+                    }
+                }
+                currNode.addChild(i,finalNode);
+                finalNode.setPrediction(prediction);    
+            }
+            return;
+        }
+        Set<Integer> usedQuestionChild = new HashSet<>(usedQ);
+        usedQuestionChild.add(use);
+        //if(usedQuestionChild.size() == 22)return;
+        Set<String> choices = new HashSet<String>(choiceSource.getChoices(columnNames[use]));
+        currNode.setQuestion(columnNames[use]);    
+        //System.out.println(currNode.getQuestion());
+        for(String i: choices){
+            Set<Integer> usedRowChild = new HashSet<Integer>(usedR);
+            if(usedQuestionChild.size() != 22)
+            for(Integer j =0;j<dataset.length;j++){
+                if(usedRowChild.contains(j))continue;
+                if(!dataset[j][use].equals(i)){
+                    usedRowChild.add(j);
+                }
+            }
+            DecisionTreeNode curr = new DecisionTreeNode();
+            currNode.addChild(i,curr);
+            //System.out.println(usedQuestionChild.size());
+            makeTree(usedQuestionChild,usedRowChild, curr);
+        }
         return;
     }//end of makeTree()
 
     //normalize age
-    public int normalize(int row, int col){
-        int stringtoInt = Integer.parseInt(dataset[row][col]);
-        int normalizedAge = stringtoInt % 100;
-        return normalizedAge;
-    }
 
-    public int array(Set<Integer> usedQuestions, Set<Integer> usedValues){//Find out the next question to use //ignore col 0 because target feature
+    public int nextTreeSplit(Set<Integer> usedQuestions, Set<Integer> usedValues){//Find out the next question to use //ignore col 0 because target feature
         Map<Integer,Double> ratio = new HashMap<Integer,Double>(); 
         ratio.put(0,0.0);
         int bestColumn = 0;
@@ -123,6 +168,12 @@ class DecisionTree{
                 if(usedValues.contains(k)){
                     continue;
                 }
+                //This was used to test for mistakes
+                // if(choiceAmount.get(dataset[k][i] + "YES") == null){
+                // System.out.println(columnNames[i]);
+                // System.out.println(choices + "\n" + dataset[k][i]);
+                // System.exit(0);
+                // }
                 if(dataset[k][0].equals("Yes")){ //Tells you mental illness of that row if its a yes increment choiceAmount of that choice + Yes
                     choiceAmount.put(dataset[k][i] + "YES", choiceAmount.get(dataset[k][i] + "YES") + 1);
                 }
@@ -149,22 +200,41 @@ class DecisionTree{
                 //then that ratio is 100% because each choice contributes 25%. This gives priority to questions with more choices.
                 ratio.put(i, maxChoiceRatio + ratio.get(i));  
                 
-            } 
+            }
+            bestColumn = i; 
         }
         for (Map.Entry<Integer,Double> entry : ratio.entrySet()){
             if(entry.getValue() > ratio.get(bestColumn))
                 bestColumn = entry.getKey();
+            if(entry.getValue() >= 0.8){ ///DONT FORGET TO FIX NUMBERS
+                    // System.out.println(usedQuestions.size() + " " + usedValues.size());
+                    // System.out.println(usedQuestions);
+                    bestColumn += 100;
+                    break;
+            }
         } 
         return bestColumn;
     }
     
-    public String makeDecision(){
-        return "PLACHOLDER";
+    public String makeDecision(CurrentSessionReponses responses){
+        DecisionTreeNode curr = root;
+        while(!curr.isPrediction()){
+            System.out.println(curr.getQuestion());
+            DecisionTreeNode next =curr.getChild(responses.getAnswer(curr.getQuestion()));
+            
+            if(next == null){
+                System.out.println(curr.getQuestion() + responses.getAnswer(curr.getQuestion()));
+                System.exit(0);
+            }
+            curr = next;
+        }
+        return curr.getQuestion();
     }
 }
 
 class DecisionTreeNode{
-    private String question;
+    private String question = "CATASTROPHIC ERROR";
+    private Boolean prediction = false;
     private Map<String,DecisionTreeNode> children;
 
     public DecisionTreeNode(){
@@ -180,5 +250,16 @@ class DecisionTreeNode{
     public void addChild(String ans,DecisionTreeNode input){
         children.put(ans, input);
         return;
+    }
+    public void setPrediction(String input){
+        prediction = true;
+        question = input;
+        return;
+    }
+    public DecisionTreeNode getChild(String input){
+        return children.get(input);
+    }
+    public boolean isPrediction(){
+        return prediction;
     }
 }
