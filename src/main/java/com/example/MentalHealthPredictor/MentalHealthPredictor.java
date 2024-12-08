@@ -11,12 +11,34 @@ public class MentalHealthPredictor {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(MentalHealthPredictor.class, args);
 		openHomePage();
+		
+
 	}
 
-	private static void openHomePage() throws IOException {
+	private static void openHomePage() throws IOException { //Try to get it so that it detects operating system (its not the same with mac)
         String url = "http://localhost:8080/";
+		String osName = getOperatingSystem();
         Runtime rt = Runtime.getRuntime();
-        rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
+
+		if(osName.contains("win")){
+			rt.exec("rundll32 url.dll,FileProtocolHandler " + url); //For Windows
+		}
+		else if(osName.contains("mac")){ 
+			rt.exec("open " + url); //For macOS
+		}
+		else if(osName.contains("nix") || osName.contains("nux") || osName.contains("mac")){ 
+			rt.exec("xdg-open " + url); //For unix based systems
+		}
+		else{
+			System.out.println("Unsupported OS, Auto Local8080 does not work.");
+		}
+        
     }
+
+	public static String getOperatingSystem() {
+		String os = System.getProperty("os.name").toLowerCase();
+		System.out.println("Using System Property: " + os);
+		return os;
+	}
 }
 
