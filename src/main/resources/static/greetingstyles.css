@@ -10,11 +10,23 @@ body{
     display:grid;
     justify-content: center; /*center hor*/
     align-items: center; /* center vert*/
+    text-align: center;
 
     
 }
 
+.item{
+    display:grid;
+    justify-content: center; /*center hor*/
+    align-items: center; /* center vert*/
+    text-align: center;
+    /* border: 2px solid green; */
+}
+
 h1{
+    border-style: groove;
+    border-bottom: 5px solid hsl(15, 100%, 50%);
+    border-right: 5px solid hsla(15, 100%, 50%, 0.753);
     max-width: 50vw;
     --bg-size: 400%;
     --color-one: hsl(15, 100%, 50%);
@@ -35,7 +47,6 @@ h1{
 
 form {
     /* border: 1px solid black; */
-    max-width: 50vw;
     --bg-size: 400%;
     --color-one: hsl(15, 100%, 50%);
     --color-two: hsl(40 95% 55%);
@@ -49,15 +60,46 @@ form {
               -webkit-background-clip: text;
               background-clip: text;
               animation: move-bg 25s infinite linear;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+
+.formGridItem{
+    /* border: 2px solid blue;  */
+    border-bottom: 2px solid rgb(7, 7, 7);
+    margin-bottom: 10px;
+    padding: 5%;
+}
+
+.formSubmit{
+    /* border: 2px solid green; */
+    display: flex;
+    justify-content: center; /*Horizontal align*/
+    align-items: center;    /*Vertical align*/
+    border:none;
+    font-size: 100%;
+    background-color: orange;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top : 20px;
 }
 
 
 select{
     background-color: orange;
     border:2px solid black;
+    width:15%;
+    height: 10%;
+    font-size:20px;
+    cursor: pointer;
 }
 
 input{
+    font-size:20px;
     background-color: orange;
     border:2px solid black;
+    width:15%;
+    height: 10%;
+    cursor: pointer;
 }

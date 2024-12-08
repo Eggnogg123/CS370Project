@@ -1,11 +1,24 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head> 
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Feedback</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel = "stylesheet" href="resultstyles.css">
 </head>
 <body>
-	<h1>Result</h1>
+    <h1>Results</h1>
+    <div class="results container">
+        <p> Thank you for taking our mental health Predictor.<br>
+            We have taken a look at your results. You scored...<br>
+        </p>
+
+        <div class = "predictionResult"> 
+            <p th:text="${prediction}"></p> 
+        </div>
+
+        <p> for a mental health illness. </p>
+        <p th:text="${predictionDefinition}"></p>
+    </div>
 
 </body>
 </html>

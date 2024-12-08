@@ -1,0 +1,36 @@
+body{
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('ZenImage.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 1.8cqw;
+    margin:0;
+    height:100vh;
+    display:grid;
+    justify-content: center; /*center hor*/
+    align-items: center; /* center vert*/
+    text-align: center;
+}
+
+.container{
+    margin: auto;
+}
+
+h1{
+    background-image: linear-gradient(rgb(8, 155, 223),rgb(211, 12, 211));
+    color: transparent;
+    background-clip: text;
+    margin: 0px;
+    padding: 0;
+    font-size: 100px;
+}
+
+.results{
+    margin: 0px;
+    background-image: linear-gradient(rgb(8, 155, 223),rgb(211, 12, 211));
+    color: transparent;
+    background-clip: text;
+}
+
+.predictionResult{
+    font-size: 70px;
+}
