@@ -10,7 +10,13 @@ public class MentalHealthPredictor {
 
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(MentalHealthPredictor.class, args);
+		openHomePage();
 	}
 
+	private static void openHomePage() throws IOException {
+        String url = "http://localhost:8080/";
+        Runtime rt = Runtime.getRuntime();
+        rt.exec("rundll32 url.dll,FileProtocolHandler " + url);
+    }
 }
 
