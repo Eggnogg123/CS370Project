@@ -80,7 +80,7 @@ class DecisionTree{
         choiceSource = cs;
         Set<Integer> usedQ = new HashSet<Integer>();
         usedQ.add(1);
-    //    usedQ.add(3);
+        usedQ.add(2);
         Set<Integer> usedR = new HashSet<Integer>();
         root = new DecisionTreeNode();
         makeTree(usedQ,usedR,root);
@@ -111,15 +111,18 @@ class DecisionTree{
             for(String i:Finalchoices){
                 DecisionTreeNode finalNode = new DecisionTreeNode();
                 String prediction = " ";
+                int noC = 0,yesC = 0;
                 for(int k =0;k<dataset.length;k++){
                     if(usedR.contains(k))continue;
                     if(dataset[k][use].equals(i)){
-                        prediction = dataset[k][0];
+                        if(dataset[k][0] == "Yes")yesC++;
+                        else noC++;
                         break;
                     }
                 }
                 currNode.addChild(i,finalNode);
-                finalNode.setPrediction(prediction);    
+                if(yesC > noC)finalNode.setPrediction("Yes");    
+                else currNode.setPrediction("No");
             }
             return;
         }
@@ -150,6 +153,7 @@ class DecisionTree{
 
     public int nextTreeSplit(Set<Integer> usedQuestions, Set<Integer> usedValues){//Find out the next question to use //ignore col 0 because target feature
         Map<Integer,Double> ratio = new HashMap<Integer,Double>(); 
+        Map<Integer,Integer> numGood = new HashMap<Integer,Integer>();
         ratio.put(0,0.0);
         int bestColumn = 0;
 
@@ -193,6 +197,10 @@ class DecisionTree{
                 if(noCount / (yesCount + noCount) > maxChoiceRatio)
                     maxChoiceRatio = noCount / (yesCount + noCount);
                 
+                if(maxChoiceRatio == 1.0){
+                    if(!numGood.containsKey(numGood))numGood.put(i,0);
+                    numGood.put(i,numGood.get(i) + 1);
+                }
                 //divide ratio my number
                 maxChoiceRatio /= choices.size();
 
@@ -206,7 +214,7 @@ class DecisionTree{
         for (Map.Entry<Integer,Double> entry : ratio.entrySet()){
             if(entry.getValue() > ratio.get(bestColumn))
                 bestColumn = entry.getKey();
-            if(entry.getValue() >= 0.8){ ///DONT FORGET TO FIX NUMBERS
+            if(entry.getValue() >= 0.81){ ///DONT FORGET TO FIX NUMBERS
                     // System.out.println(usedQuestions.size() + " " + usedValues.size());
                     // System.out.println(usedQuestions);
                     bestColumn += 100;

@@ -1,6 +1,8 @@
 package com.example.MentalHealthPredictor;
 
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLConnection;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,9 +17,10 @@ public class MentalHealthPredictor {
 
 	}
 
-	private static void openHomePage() throws IOException { //Try to get it so that it detects operating system (its not the same with mac)
+	private static void openHomePage() throws IOException { //Try to get it so that it detects operating system (its not the same with mac) //Try to get it so that it detects operating system (its not the same with mac)
         String url = "http://localhost:8080/";
 		String osName = getOperatingSystem();
+        String osName = getOperatingSystem();
         Runtime rt = Runtime.getRuntime();
 
 		if(osName.contains("win")){
