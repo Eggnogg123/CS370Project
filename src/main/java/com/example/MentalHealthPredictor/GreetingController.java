@@ -15,11 +15,13 @@ public class GreetingController {
 	DataSetResponseParser parser;
 	RandomForestAlgorithm alg;
 	String prediction; /*  */
+	Feedback test;
+
 	public GreetingController() throws IOException{
 		parser = new DataSetResponseParser("survey.csv");
 		alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();
-		
+		test = new Feedback("Yes", parser, null);
 		
 	}
 	

@@ -5,23 +5,21 @@ public class Feedback {
     private CurrentSessionReponses userAnswers;
     private String prediction;
 
-    public Feedback(String prediction, DataSetResponseParser d, CurrentSessionReponses C){
-
+    public Feedback(String prediction, DataSetResponseParser d, CurrentSessionReponses c){
+        comparison = d;
+        userAnswers = c;
+        getHealthyPerson();
     }// end of Feedback() method
 
     public int getHealthyPerson(){//Dont care about the prediction right now, only need to get a healthy person from dataset
         int rowIndex = 0;
-        String dataset[][] = 
-        {   {"John", "Healthy", "Yes"},
-            {"Jane", "Healthy", "No"},
-            {"Alice", "Sick", "No"},
-            {"Bob", "Healthy", "Yes"},
-            {"Eve", "Sick", "Yes"}      };
-        String healthyPerson[] = new String[dataset[3].length];
+        String healthyPerson[] = comparison.getSample(13);//gets the data from the person who is healthy
 
-        for(int i=0; i<dataset[3].length; i++){ //This will store the healthy users responses so we can compare them to our current users
-            healthyPerson[i] = dataset[3][i];
-        }
+        for(String i: healthyPerson){
+            System.out.print(i);
+        }System.out.println();
+        
+        
 
         //comparison.    //.getrows() gets number of rows in dataset
         return rowIndex;

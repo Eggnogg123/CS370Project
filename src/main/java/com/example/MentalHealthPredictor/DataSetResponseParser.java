@@ -30,6 +30,10 @@ public class DataSetResponseParser{
         
     }
 
+    public String[] getSample(int row){
+        return parsedData[row];
+    }
+
 // Get Number of Rows or Columns of parsed Dataset
     public int getRows(){
         return numResponses;
