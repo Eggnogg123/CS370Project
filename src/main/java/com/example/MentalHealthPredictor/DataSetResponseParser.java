@@ -34,6 +34,10 @@ public class DataSetResponseParser{
         return parsedData[row];
     }
 
+    public String getvalueString(int row, int col){ //added this 12.9.24 William
+        return parsedData[row][col];
+    }
+
 // Get Number of Rows or Columns of parsed Dataset
     public int getRows(){
         return numResponses;
