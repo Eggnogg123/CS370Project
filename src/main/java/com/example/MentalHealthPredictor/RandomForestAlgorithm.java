@@ -52,9 +52,10 @@ public class RandomForestAlgorithm {
     public String makePrediction(CurrentSessionReponses current){
         int YesC = 0, NoC = 0;
         for(int i = 0;i< forest.length;i++){
-            if(forest[i].makeDecision(current).equals("PLACHOLDER"))YesC++;
+            if(forest[i].makeDecision(current).equals("Yes"))YesC++;
             else NoC++;
         }
+        System.out.println(YesC + " " + NoC);
         if(YesC > NoC) return "YES";
         else return "NO";
     }
@@ -110,7 +111,6 @@ class DecisionTree{
             currNode.setQuestion(columnNames[use]);
             for(String i:Finalchoices){
                 DecisionTreeNode finalNode = new DecisionTreeNode();
-                String prediction = " ";
                 int noC = 0,yesC = 0;
                 for(int k =0;k<dataset.length;k++){
                     if(usedR.contains(k))continue;
@@ -121,8 +121,10 @@ class DecisionTree{
                     }
                 }
                 currNode.addChild(i,finalNode);
-                if(yesC > noC)finalNode.setPrediction("Yes");    
-                else currNode.setPrediction("No");
+                if(yesC > noC){
+                    finalNode.setPrediction("Yes");    
+                }
+                else finalNode.setPrediction("No");
             }
             return;
         }
@@ -198,7 +200,7 @@ class DecisionTree{
                     maxChoiceRatio = noCount / (yesCount + noCount);
                 
                 if(maxChoiceRatio == 1.0){
-                    if(!numGood.containsKey(numGood))numGood.put(i,0);
+                    if(!numGood.containsKey(i))numGood.put(i,0);
                     numGood.put(i,numGood.get(i) + 1);
                 }
                 //divide ratio my number
@@ -211,29 +213,39 @@ class DecisionTree{
             }
             bestColumn = i; 
         }
+        boolean containsPerfect = false;
         for (Map.Entry<Integer,Double> entry : ratio.entrySet()){
+            if(numGood.containsKey(entry.getKey()) || numGood.containsKey(bestColumn)){
+                if(numGood.getOrDefault(entry.getKey(),0) > numGood.getOrDefault(bestColumn,0))
+                bestColumn = entry.getKey();
+                //System.out.println(numGood.get(bestColumn));
+                containsPerfect = true;
+                continue;
+            }
             if(entry.getValue() > ratio.get(bestColumn))
                 bestColumn = entry.getKey();
-            if(entry.getValue() >= 0.81){ ///DONT FORGET TO FIX NUMBERS
-                    // System.out.println(usedQuestions.size() + " " + usedValues.size());
-                    // System.out.println(usedQuestions);
-                    bestColumn += 100;
-                    break;
-            }
-        } 
+            // if(entry.getValue() >= 0.8){ ///DONT FORGET TO FIX NUMBERS
+            //         // System.out.println(usedQuestions.size() + " " + usedValues.size());
+            //         // System.out.println(usedQuestions);
+            //         bestColumn += 100;
+            //         break;
+            // }
+        }
+        if(containsPerfect)bestColumn += 100;
         return bestColumn;
     }
     
     public String makeDecision(CurrentSessionReponses responses){
         DecisionTreeNode curr = root;
         while(!curr.isPrediction()){
-            System.out.println(curr.getQuestion());
+            //System.out.println(curr.getQuestion());
             DecisionTreeNode next =curr.getChild(responses.getAnswer(curr.getQuestion()));
             
-            if(next == null){
-                System.out.println(curr.getQuestion() + responses.getAnswer(curr.getQuestion()));
-                System.exit(0);
-            }
+            // if(next == null){
+            //     System.exit(0);
+            //     System.out.println(curr.getQuestion() + responses.getAnswer(curr.getQuestion()));
+                
+            // }
             curr = next;
         }
         return curr.getQuestion();

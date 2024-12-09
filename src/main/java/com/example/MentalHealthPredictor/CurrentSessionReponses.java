@@ -33,10 +33,7 @@ public class CurrentSessionReponses { /*This is our model class */
     //Dont change 
     public void setans1(String ans1){ans.put("0", ans1);}   
     public void setans2(String ans2){ans.put("1", ans2);}   
-    public void setans3(String ans3){
-        ans.put("2", ans3);
-        System.out.println(ques[2] + ans3);
-    } 
+    public void setans3(String ans3){ans.put("2", ans3);} 
     public void setans4(String ans4){ans.put("3", ans4);}   
     public void setans5(String ans5){ans.put("4", ans5);}  
     public void setans6(String ans6){ans.put("5", ans6);}  
