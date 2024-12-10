@@ -21,7 +21,7 @@ public class GreetingController {
 		parser = new DataSetResponseParser("survey.csv");
 		alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();
-		test = new Feedback("Yes", parser, null);
+		
 		System.out.println(parser.getSample(0)[0] + "\n dashodhfiuasfgdsuhgdoshogjsogsd");
 	}
 	
@@ -39,20 +39,22 @@ public class GreetingController {
 	}
 	*/
  
-	@GetMapping("/")
+	@GetMapping("/") //gets initial landing page
 	public String greeting(Model model,@ModelAttribute CurrentSessionReponses greet) {
 		
 	    return "index";
 	}//end of GetMapping
   
-	@PostMapping("/feedback") 
+	@PostMapping("/feedback") //outputs feedback and result page
 	public String userRegistration(@ModelAttribute CurrentSessionReponses greet, Model model) { //links to model class which is Greeting.java
 
 	//   for(int i=0;i<23;i++){
 	// 	System.out.println(parser.getQuestion(i));
 	// 	System.out.println(greet.getAnswer(greet.getQuestion(i)));
 	//   }
-
+	for(int i=0;i<23;i++){ //prints out users inputs just to make sure it works 
+		System.out.println(greet.getAnswer(Integer.toString(i)));
+	}
 	  greet.setQuestions(parser);
 	  System.out.println(alg.makePrediction(greet));
 	  String prediction = "";
@@ -66,19 +68,19 @@ public class GreetingController {
 		//Send out definition of negative result
         model.addAttribute("predictionDefinition", "This means that you probably do not have a mental health condition. However you should still take care to maintain your healthy mind!"); 
       }
-
+	  test = new Feedback(prediction, parser, greet);
       model.addAttribute("prediction", prediction); //Print out the prediction result on the webpage
 	  return "result";
 	}
 
-	@PostMapping("/survey") 
+	@PostMapping("/survey") //Outputs survey page
 	public String getgreeting(Model model,@ModelAttribute CurrentSessionReponses greet) {// Handles fetching questions and options per question
 		for(int i=1; i<=parser.getCols()-1; i++){ //this loop automates the process of pulling questions from a source for a specified number of question
-			
 			model.addAttribute("question" + i,parser.getQuestion(i-1));
 			model.addAttribute("options" + i, parser.getChoices(parser.getQuestion(i-1)));
-		}		
-		
+		}
+
+				
 			return "greeting";
 		}//end of GetMapping
 

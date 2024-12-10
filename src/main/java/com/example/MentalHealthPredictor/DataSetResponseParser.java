@@ -30,6 +30,10 @@ public class DataSetResponseParser{
         
     }
 
+    public String[][] getParsedData(){
+        return parsedData;
+    }
+
     public String[] getSample(int row){
         return parsedData[row];
     }
