@@ -59,12 +59,12 @@ public class GreetingController {
       if(alg.makePrediction(greet).equals("YES")){
         prediction = "Positive";
 		//Send out definition of positive result
-        model.addAttribute("predictionDefinition", "This means that you have a previously undetected mental health condition that should be verified by professionals"); 
+        model.addAttribute("predictionDefinition", "This means that you  may have a previously undetected mental health condition that should be verified by professionals"); 
       }
       else{
         prediction = "Negative";
 		//Send out definition of negative result
-        model.addAttribute("predictionDefinition", "This means that you do not have a mental health condition. However you should still take care to maintain your healthy mind!"); 
+        model.addAttribute("predictionDefinition", "This means that you probably do not have a mental health condition. However you should still take care to maintain your healthy mind!"); 
       }
 
       model.addAttribute("prediction", prediction); //Print out the prediction result on the webpage

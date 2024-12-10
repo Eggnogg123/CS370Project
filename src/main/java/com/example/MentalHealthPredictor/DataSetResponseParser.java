@@ -108,6 +108,10 @@ public class DataSetResponseParser{
                 if(s.equals("Gender")){
                     parsedData[x][y] = sortGender(data.getRecord(i, j));    
                 }
+                else if(s.equals("Age")){
+                    long index = Long.valueOf(data.getRecord(i, j)) % 100;
+                    parsedData[x][y] = Long.toString(index / 10);    
+                }
                 else if(s.equals("Mental Ilnness")){
                     parsedData[x][y] = sortMentalIllness(data.getRecord(i, j));
                 }
@@ -138,7 +142,10 @@ public class DataSetResponseParser{
                 case "Age":
                 parsedColumnQuestions[i] = "What is your Age?";
                 parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
-                parsedQuestionChoices.get(parsedColumnQuestions[i]).add("RANGEBASED");
+                for(int x =0;x< getRows();x++){
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                }
                 break;
                 case "Gender":
                 parsedColumnQuestions[i] = "What is your Gender?";
@@ -149,7 +156,7 @@ public class DataSetResponseParser{
                 }
                 break;
                 case "state":
-                parsedColumnQuestions[i] = "If you live in the US, what is your State of residence?";
+                parsedColumnQuestions[i] = "If you live in one of these US States, what is your State of residence? Otherwise put NA.";
                 parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
                 for(int x =0;x< getRows();x++){
                     if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;

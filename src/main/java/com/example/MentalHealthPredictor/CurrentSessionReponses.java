@@ -2,43 +2,73 @@ package com.example.MentalHealthPredictor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class CurrentSessionReponses { /*This is our model class */
-    /* 
-    private long id;
-    private String content;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-    */
-    //gonna try and generalize this into an array
+    
     private Map<String,String> ans = new HashMap<String,String>();
     private String ques[] = new String[22];
     
 
-
+    public void setTest(DataSetResponseParser parser,int row){
+        String response[] = parser.getSample(row);
+        setans1(response[1]);
+        setans2(response[2]);
+        setans3(response[3]);
+        setans4(response[4]);
+        setans5(response[5]);
+        setans6(response[6]);
+        setans7(response[7]);
+        setans8(response[8]);
+        setans9(response[9]);
+        setans10(response[10]);
+        setans11(response[11]);
+        setans12(response[12]);
+        setans13(response[13]);
+        setans14(response[14]);
+        setans15(response[15]);
+        setans16(response[16]);
+        setans17(response[17]);
+        setans18(response[18]);
+        setans19(response[19]);
+        setans20(response[20]);
+        setans21(response[21]);
+        setans22(response[22]);
+        setQuestions(parser);
+    }
     //Dont change 
-    public void setans1(String ans1){ans.put("0", ans1);}   
+    public void setans1(String ans1){
+        try {
+            long index = (Long.valueOf(ans1) % 100) / 10;
+            ans.put("0", Long.toString(index));
+        } catch (NumberFormatException e) {
+            ans.put("0","0");
+        } 
+        
+    }   
     public void setans2(String ans2){ans.put("1", ans2);}   
     public void setans3(String ans3){ans.put("2", ans3);} 
     public void setans4(String ans4){ans.put("3", ans4);}   
-    public void setans5(String ans5){ans.put("4", ans5);}  
+    public void setans5(String ans5){
+        if(ans5.equals("Don't Know")){
+            Random rand = new Random();
+            int check = rand.nextInt() % 2;
+            if(check == 0)ans.put("4", "Yes");
+            else ans.put("4", "No");
+        }
+        else ans.put("4", ans5);
+    }  
     public void setans6(String ans6){ans.put("5", ans6);}  
     public void setans7(String ans7){ans.put("6", ans7);}  
-    public void setans8(String ans8){ans.put("7", ans8);}  
+    public void setans8(String ans8){
+        if(ans8.equals("Don't Know")){
+            Random rand = new Random();
+            int check = rand.nextInt() % 2;
+            if(check == 0)ans.put("7", "Yes");
+            else ans.put("7", "No");
+        }
+        ans.put("7", ans8);
+    }  
     public void setans9(String ans9){ans.put("8", ans9);}  
     public void setans10(String ans10){ans.put("9", ans10);}  
     public void setans11(String ans11){ans.put("10", ans11);} 

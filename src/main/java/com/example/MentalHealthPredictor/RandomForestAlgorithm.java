@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 
 public class RandomForestAlgorithm {
     DataSetResponseParser data;
@@ -27,11 +23,18 @@ public class RandomForestAlgorithm {
         Random rand = new Random();
         forest = new DecisionTree[data.getRows()];
         numTrees = data.getRows();
+        int correct = 0,wrong = 0;
         for(int i = 0;i<numTrees ;i++){
             int ignoreCol = rand.nextInt(data.getCols() - 1);
             bootStrapData(i, ignoreCol);
             forest[i] = new DecisionTree(variables,table,data);
-        }   
+            CurrentSessionReponses sampleIn = new CurrentSessionReponses();
+            sampleIn.setTest(data,i);
+            if(forest[i].makeDecision(sampleIn).equals(data.getSample(i)[0]))correct++;
+            else wrong++;
+        }
+        System.out.println(correct + " Correct   "+ wrong +"  Wrong" );
+        //if(correct < 500)buildRandomForest();   
     }
     public String makePrediction(CurrentSessionReponses current){
         int YesC = 0, NoC = 0;
@@ -64,8 +67,8 @@ class DecisionTree{
         dataset = ds;
         choiceSource = cs;
         Set<Integer> usedQ = new HashSet<Integer>();
-        usedQ.add(1);
-        usedQ.add(3);
+        // usedQ.add(1);
+        //usedQ.add(3);
         Set<Integer> usedR = new HashSet<Integer>();
         root = new DecisionTreeNode();
         makeTree(usedQ,usedR,root);
@@ -198,12 +201,12 @@ class DecisionTree{
                 bestColumn = entry.getKey();
         }
         //System.out.println(usedValues.size());
-        if(containsPerfect || (usedValues.size() > 1250 && bestColumn != 0)){
+        if(containsPerfect || (usedValues.size() > 1258 && bestColumn != 0)){
             Set<String> Finalchoices = new HashSet<String>(choiceSource.getChoices(columnNames[bestColumn]));
             currNode.setQuestion(columnNames[bestColumn]);
             usedQuestions.add(bestColumn);
             for(String i:Finalchoices){
-                if(usedValues.size() > 1250 || whichGood.get(bestColumn).contains(i)){
+                if(usedValues.size() > 1258 || whichGood.get(bestColumn).contains(i)){
     
                     DecisionTreeNode finalNode = new DecisionTreeNode();
                     int noC = 0,yesC = 0;
@@ -245,7 +248,7 @@ class DecisionTree{
     public String makeDecision(CurrentSessionReponses responses){
         DecisionTreeNode curr = root;
         while(!curr.isPrediction()){
-            System.out.println(curr.getQuestion());
+            //System.out.println(curr.getQuestion());
             DecisionTreeNode next =curr.getChild(responses.getAnswer(curr.getQuestion()));
             
             // if(next == null){
