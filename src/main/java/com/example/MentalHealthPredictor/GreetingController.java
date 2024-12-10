@@ -22,7 +22,7 @@ public class GreetingController {
 		alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();
 		test = new Feedback("Yes", parser, null);
-		
+		System.out.println(parser.getSample(0)[0] + "\n dashodhfiuasfgdsuhgdoshogjsogsd");
 	}
 	
 	/* 

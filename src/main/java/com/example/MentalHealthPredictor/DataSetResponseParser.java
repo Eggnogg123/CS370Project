@@ -88,11 +88,11 @@ public class DataSetResponseParser{
         }
         //The parsed data array is smaller than the one in SurveyResponse, since 3 columns of data not
         //used in the algorithm get removed, invalid responses are also skipped over
-        parsedData = new String[numResponses][data.getNumCol() - 3];
-        parsedColumnName = new String[data.getNumCol() - 3];
+        parsedData = new String[numResponses][data.getNumCol() - 4];
+        parsedColumnName = new String[data.getNumCol() - 4];
         for(int i =0,x = 0;i < parsedColumnName.length;i++,x++){
             String s = data.getColumnName(x);
-            while(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments")){
+            while(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments") || s.equals("Country")){
                 x++;
                 s = data.getColumnName(x);
             }
@@ -102,7 +102,7 @@ public class DataSetResponseParser{
             if(data.getRecord(i,predictedVarCol).equals(""))continue;
             for(int j =0,y = 0;j< data.getNumCol();j++){
                 String s = data.getColumnName(j);
-                if(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments")){
+                if(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments") ||s.equals("Country")){
                     continue;
                 }
                 if(s.equals("Gender")){
@@ -118,7 +118,7 @@ public class DataSetResponseParser{
         }
     }
     public String getQuestion(int num){
-        if( num < 0 || num > 22){
+        if( num < 0 || num > 21){
             System.out.println("INVALID QUESTION QUERY");
             System.exit(0);
         }
@@ -142,14 +142,6 @@ public class DataSetResponseParser{
                 break;
                 case "Gender":
                 parsedColumnQuestions[i] = "What is your Gender?";
-                parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
-                for(int x =0;x< getRows();x++){
-                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
-                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
-                }
-                break;
-                case "Country":
-                parsedColumnQuestions[i] = "What is your Country of Residence?";
                 parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
                 for(int x =0;x< getRows();x++){
                     if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;

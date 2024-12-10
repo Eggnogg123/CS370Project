@@ -170,12 +170,7 @@
             </select>
         </div><br/>
         
-        <div class="formGridItem">
-            <label for="twentithirdquestion" th:text="${question23}">Twentithird question: </label><br/>
-            <select name = "ans23">
-                <option th:each="option : ${options23}" th:value="${option}" th:text="${option}"></option>
-            </select>
-        </div><br/><br/>
+        <br/>
         
         <button type = "submit" class="formGridItem formSubmit">Submit</button>
     </form>

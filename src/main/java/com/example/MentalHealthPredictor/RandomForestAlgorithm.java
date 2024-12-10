@@ -65,9 +65,7 @@ class DecisionTree{
         choiceSource = cs;
         Set<Integer> usedQ = new HashSet<Integer>();
         usedQ.add(1);
-        usedQ.add(2);
         usedQ.add(3);
-        usedQ.add(4);
         Set<Integer> usedR = new HashSet<Integer>();
         root = new DecisionTreeNode();
         makeTree(usedQ,usedR,root);
@@ -103,7 +101,7 @@ class DecisionTree{
         //System.out.println(currNode.getQuestion());
         for(String i: choices){
             Set<Integer> usedRowChild = new HashSet<Integer>(usedR);
-            if(usedQuestionChild.size() != 22)
+            if(usedQuestionChild.size() != 21)
             for(Integer j =0;j<dataset.length;j++){
                 if(usedRowChild.contains(j))continue;
                 if(!dataset[j][use].equals(i)){
@@ -226,7 +224,7 @@ class DecisionTree{
                  else{
                     
                     Set<Integer> usedRowChild = new HashSet<Integer>(usedValues);
-                    if(usedQuestions.size() != 22)
+                    if(usedQuestions.size() != 21)
                     for(Integer j =0;j<dataset.length;j++){
                         if(usedRowChild.contains(j))continue;
                         if(!dataset[j][bestColumn].equals(i)){
@@ -247,7 +245,7 @@ class DecisionTree{
     public String makeDecision(CurrentSessionReponses responses){
         DecisionTreeNode curr = root;
         while(!curr.isPrediction()){
-            // System.out.println(curr.getQuestion());
+            System.out.println(curr.getQuestion());
             DecisionTreeNode next =curr.getChild(responses.getAnswer(curr.getQuestion()));
             
             // if(next == null){

@@ -26,7 +26,7 @@ public class CurrentSessionReponses { /*This is our model class */
     */
     //gonna try and generalize this into an array
     private Map<String,String> ans = new HashMap<String,String>();
-    private String ques[] = new String[23];
+    private String ques[] = new String[22];
     
 
 
@@ -53,13 +53,13 @@ public class CurrentSessionReponses { /*This is our model class */
     public void setans20(String ans20){ans.put("19", ans20);}
     public void setans21(String ans21){ans.put("20", ans21);}
     public void setans22(String ans22){ans.put("21", ans22);}
-    public void setans23(String ans23){ans.put("22", ans23);}
+    // public void setans23(String ans23){ans.put("22", ans23);}
 
     public String getAnswer(String question){
         return ans.get(question);
     }
     public void setQuestions(DataSetResponseParser input){
-        for(int i =0;i<23;i++){
+        for(int i =0;i<22;i++){
             ques[i] = input.getQuestion(i);
             ans.put(ques[i], ans.get(Integer.toString(i)));
             //System.out.println(ques[i]);
