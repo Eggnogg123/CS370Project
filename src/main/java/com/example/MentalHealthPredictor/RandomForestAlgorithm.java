@@ -31,23 +31,7 @@ public class RandomForestAlgorithm {
             int ignoreCol = rand.nextInt(data.getCols() - 1);
             bootStrapData(i, ignoreCol);
             forest[i] = new DecisionTree(variables,table,data);
-            //This CODE below prints out all the bootstrapped Datasets
-            // for(int j =0;j<1;j++){
-            //     for(int x =0;x<table[0].length;x++){
-            //         System.out.print(table[j][x] + "  ");
-            //     }
-            //     System.out.println();
-            // }
-            // for(int j =0;j<variables.length;j++){
-            //     System.out.print(variables[j] + "  ");
-            // }
-            // System.out.println(variables.length);
-            // System.out.println(data.getParsedColName(ignoreCol));
         }   
-        // for(int i = 0;i<table[0].length;i++){
-        //     System.out.println(variables[i]);
-        //     System.out.println(table[0][i]);
-        // }
     }
     public String makePrediction(CurrentSessionReponses current){
         int YesC = 0, NoC = 0;
@@ -82,6 +66,8 @@ class DecisionTree{
         Set<Integer> usedQ = new HashSet<Integer>();
         usedQ.add(1);
         usedQ.add(2);
+        usedQ.add(3);
+        usedQ.add(4);
         Set<Integer> usedR = new HashSet<Integer>();
         root = new DecisionTreeNode();
         makeTree(usedQ,usedR,root);
@@ -90,9 +76,9 @@ class DecisionTree{
     }//end of constructor
 
     private void makeTree(Set<Integer> usedQ,Set<Integer> usedR,DecisionTreeNode currNode){
-        int use = nextTreeSplit(usedQ,usedR);
+        int use = nextTreeSplit(usedQ,usedR,currNode);
         
-        if(use == 0){
+        if(use == 0 ){
             int noC = 0,yesC = 0;
             for(int i = 0;i<dataset.length;i++){
                 if(usedR.contains(i))continue;
@@ -107,25 +93,6 @@ class DecisionTree{
         
         if(use >= 100){
             use -= 100;
-            Set<String> Finalchoices = new HashSet<String>(choiceSource.getChoices(columnNames[use]));
-            currNode.setQuestion(columnNames[use]);
-            for(String i:Finalchoices){
-                DecisionTreeNode finalNode = new DecisionTreeNode();
-                int noC = 0,yesC = 0;
-                for(int k =0;k<dataset.length;k++){
-                    if(usedR.contains(k))continue;
-                    if(dataset[k][use].equals(i)){
-                        if(dataset[k][0] == "Yes")yesC++;
-                        else noC++;
-                        break;
-                    }
-                }
-                currNode.addChild(i,finalNode);
-                if(yesC > noC){
-                    finalNode.setPrediction("Yes");    
-                }
-                else finalNode.setPrediction("No");
-            }
             return;
         }
         Set<Integer> usedQuestionChild = new HashSet<>(usedQ);
@@ -153,9 +120,10 @@ class DecisionTree{
 
     //normalize age
 
-    public int nextTreeSplit(Set<Integer> usedQuestions, Set<Integer> usedValues){//Find out the next question to use //ignore col 0 because target feature
+    public int nextTreeSplit(Set<Integer> usedQuestions, Set<Integer> usedValues,DecisionTreeNode currNode){//Find out the next question to use //ignore col 0 because target feature
         Map<Integer,Double> ratio = new HashMap<Integer,Double>(); 
         Map<Integer,Integer> numGood = new HashMap<Integer,Integer>();
+        Map<Integer,Set<String>> whichGood = new HashMap<Integer,Set<String>>();
         ratio.put(0,0.0);
         int bestColumn = 0;
 
@@ -199,9 +167,15 @@ class DecisionTree{
                 if(noCount / (yesCount + noCount) > maxChoiceRatio)
                     maxChoiceRatio = noCount / (yesCount + noCount);
                 
-                if(maxChoiceRatio == 1.0){
+                if(maxChoiceRatio >= 1.0){
                     if(!numGood.containsKey(i))numGood.put(i,0);
                     numGood.put(i,numGood.get(i) + 1);
+                    if(!whichGood.containsKey(i)){
+                        Set<String> temp= new HashSet<String>();
+                        temp.add(j);
+                        whichGood.put(i,temp);
+                    }
+                    else whichGood.get(i).add(j);
                 }
                 //divide ratio my number
                 maxChoiceRatio /= choices.size();
@@ -224,21 +198,56 @@ class DecisionTree{
             }
             if(entry.getValue() > ratio.get(bestColumn))
                 bestColumn = entry.getKey();
-            // if(entry.getValue() >= 0.8){ ///DONT FORGET TO FIX NUMBERS
-            //         // System.out.println(usedQuestions.size() + " " + usedValues.size());
-            //         // System.out.println(usedQuestions);
-            //         bestColumn += 100;
-            //         break;
-            // }
         }
-        if(containsPerfect)bestColumn += 100;
+        //System.out.println(usedValues.size());
+        if(containsPerfect || (usedValues.size() > 1250 && bestColumn != 0)){
+            Set<String> Finalchoices = new HashSet<String>(choiceSource.getChoices(columnNames[bestColumn]));
+            currNode.setQuestion(columnNames[bestColumn]);
+            usedQuestions.add(bestColumn);
+            for(String i:Finalchoices){
+                if(usedValues.size() > 1250 || whichGood.get(bestColumn).contains(i)){
+    
+                    DecisionTreeNode finalNode = new DecisionTreeNode();
+                    int noC = 0,yesC = 0;
+                    for(int k =0;k<dataset.length;k++){
+                        if(usedValues.contains(k))continue;
+                        if(dataset[k][bestColumn].equals(i)){
+                            if(dataset[k][0] == "Yes")yesC++;
+                            else noC++;
+                            break;
+                        }
+                    }
+                    currNode.addChild(i,finalNode);
+                    if(yesC > noC){
+                        finalNode.setPrediction("Yes");    
+                    }
+                    else finalNode.setPrediction("No");
+                }
+                 else{
+                    
+                    Set<Integer> usedRowChild = new HashSet<Integer>(usedValues);
+                    if(usedQuestions.size() != 22)
+                    for(Integer j =0;j<dataset.length;j++){
+                        if(usedRowChild.contains(j))continue;
+                        if(!dataset[j][bestColumn].equals(i)){
+                            usedRowChild.add(j);
+                        }
+                    }
+                    DecisionTreeNode curr = new DecisionTreeNode();
+                    currNode.addChild(i,curr);
+                //    curr.setPrediction("No");
+                    makeTree(usedQuestions,usedRowChild, curr);
+                }   
+            }
+            bestColumn += 100;
+        }
         return bestColumn;
     }
     
     public String makeDecision(CurrentSessionReponses responses){
         DecisionTreeNode curr = root;
         while(!curr.isPrediction()){
-            //System.out.println(curr.getQuestion());
+            // System.out.println(curr.getQuestion());
             DecisionTreeNode next =curr.getChild(responses.getAnswer(curr.getQuestion()));
             
             // if(next == null){
