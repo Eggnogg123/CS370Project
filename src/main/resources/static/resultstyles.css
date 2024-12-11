@@ -4,7 +4,6 @@ body{
     background-size: cover;
     font-size: 1.8cqw;
     margin:0;
-    height:100vh;
     display:grid;
     justify-content: center; /*center hor*/
     align-items: center; /* center vert*/

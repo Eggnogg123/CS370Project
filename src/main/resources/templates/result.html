@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head> 
-    <title>Feedback</title>
+    <title>Mental Health Feedback</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel = "stylesheet" href="resultstyles.css">
 </head>
@@ -15,11 +15,125 @@
         <div class = "predictionResult"> 
             <p th:text="${prediction}"></p> 
         </div>
-
-        <p> for a mental health illness. </p>
         <p th:text="${predictionDefinition}"></p>
 
+        <p>Our software is using a Random Forest model to predict your mental health.</p>
+        <p>But we also compared you to a person who is confirmed to be mentally healthy. Here are that persons results.</p><br/><br/>
+        
+        
+        
+        <div class="formGridItem">
+            <label for="firstquestion" th:text="${question1}">First question: </label><br/>
+            <p>Filler Answer</p>
+        </div><br/>
+    
+        <div class="formGridItem">
+            <label for="secondquestion" th:text="${question2}">Second question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+       
+        <div class="formGridItem"> 
+            <label for="thirdquestion" th:text="${question3}">Third question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+     
+        <div class="formGridItem">
+            <label for="fourthquestion" th:text="${question4}">Fourth question: </label><br/>
+            <!--Put response here-->
+         </div><br/>
+            
+        <div class="formGridItem">
+            <label for="fifthquestion" th:text="${question5}">Fifth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="sixthquestion" th:text="${question6}">Sixth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="seventhquestion" th:text="${question7}">Seventh question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="eighthquestion" th:text="${question8}">Eighth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="ninthquestion" th:text="${question9}">Ninth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="tenthquestion" th:text="${question10}">Tenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="eleventhquestion" th:text="${question11}">Eleventh question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+    
+        <div class="formGridItem">
+           <label for="twelfthquestion" th:text="${question12}">Twelfth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+    
+        <div class="formGridItem">
+            <label for="thirteenthquestion" th:text="${question13}">Thirteenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="fourteenthquestion" th:text="${question14}">Fourteenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="fifteenthquestion" th:text="${question15}">Fifteenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="sixteenththquestion" th:text="${question16}">sixteenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="seventeenthquestion" th:text="${question17}">Seventeenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="eighteenthquestion"th:text="${question18}">Eighteenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+    
+        <div class="formGridItem">
+            <label for="nineteenthquestion" th:text="${question19}">Nineteenth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+    
+        <div class="formGridItem">
+            <label for="twentitethquestion" th:text="${question20}">Twentiteth question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+            
+        <div class="formGridItem">
+            <label for="twentifirstquestion" th:text="${question21}">Twentifirst question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+        
+        <div class="formGridItem">
+            <label for="twentisecondquestion" th:text="${question22}">Twentisecond question: </label><br/>
+            <!--Put response here-->
+        </div><br/>
+
         <!--2 links gaurenteed and 18 other links-->
+        <a href="https://stackoverflow.com/questions/47903209/how-to-shift-a-block-of-code-left-right-by-one-space-in-vscode">Here is a link</a>
         
 
     </div>

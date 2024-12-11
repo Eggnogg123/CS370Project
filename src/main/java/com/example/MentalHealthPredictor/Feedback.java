@@ -40,21 +40,21 @@ public class Feedback {
             }
             healthylist[i] = nextHealthy;
         }
-      //  return getSimilar(healthylist, index);
-      Map<String,Integer> answerCount = new HashMap<String,Integer>();
-      String mostC = new String();
-      for(int i=0;i<10;i++){
-        String curr = new String(comparison.getSample(healthylist[i])[index]);
-        if(!answerCount.containsKey(curr))
-            answerCount.put(curr, 0);
-        else answerCount.put(curr, answerCount.get(curr) + 1);
-        mostC = curr;
-      }
+       //  return getSimilar(healthylist, index);
+       Map<String,Integer> answerCount = new HashMap<String,Integer>();
+       String mostC = new String();
+       for(int i=0;i<10;i++){
+            String curr = new String(comparison.getSample(healthylist[i])[index]);
+            if(!answerCount.containsKey(curr))
+                answerCount.put(curr, 0);
+            else answerCount.put(curr, answerCount.get(curr) + 1);
+            mostC = curr;
+        }
       
-    for(Map.Entry<String, Integer> i:answerCount.entrySet()){
-        if(answerCount.get(i.getKey()) > answerCount.get(mostC))mostC = i.getKey();
-    }
-    return mostC;
+        for(Map.Entry<String, Integer> i:answerCount.entrySet()){
+            if(answerCount.get(i.getKey()) > answerCount.get(mostC))mostC = i.getKey();
+        }
+        return mostC;
     }//end of getHealthyPerson() method
 
     private Integer getSimilar(int row, int indexNotUsed){// how many indices are common excluding the ones oyu shouldnt look at
