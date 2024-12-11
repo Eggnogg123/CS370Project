@@ -13,8 +13,11 @@ import java.io.IOException;
 public class DataSetResponseParser{
     private SurveyResponse data;
     private int numResponses,predictedVarCol = -1;
-    private String parsedData[][],parsedColumnName[],parsedColumnQuestions[];
+    private String parsedData[][], //Holds the parsed data from the csv file
+                   parsedColumnName[],
+                   parsedColumnQuestions[];
     private Map<String,Set<String>> parsedQuestionChoices;
+
 //Constructor
     public DataSetResponseParser(String filename) throws IOException{
         data = new SurveyResponse(filename);
@@ -26,11 +29,10 @@ public class DataSetResponseParser{
             }
         }
         parseResponse();
-        buildQuestionsChoices(parsedColumnName.length - 1);        
-        
+        buildQuestionsChoices(parsedColumnName.length - 1);          
     }
 
-    public String[][] getParsedData(){
+    public String[][] getParsedData(){ //Returns the 2d array of the parsed data.
         return parsedData;
     }
 

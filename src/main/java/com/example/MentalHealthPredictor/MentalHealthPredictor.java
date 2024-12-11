@@ -13,11 +13,9 @@ public class MentalHealthPredictor {
 	public static void main(String[] args) throws IOException {
 		SpringApplication.run(MentalHealthPredictor.class, args);
 		openHomePage();
-		
-
 	}
 
-	private static void openHomePage() throws IOException { //Try to get it so that it detects operating system (its not the same with mac) //Try to get it so that it detects operating system (its not the same with mac)
+	private static void openHomePage() throws IOException { //Automatically runs localhost8080 to open the webpage
         String url = "http://localhost:8080/";
 		String osName = getOperatingSystem();
         Runtime rt = Runtime.getRuntime();
