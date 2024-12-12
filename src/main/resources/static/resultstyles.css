@@ -10,10 +10,13 @@ body{
     text-align: center;
 }
 
-/* .scrollable{
+div.scrollable{
+    margin-top: 5%;
+    margin-bottom: 5%;
     overflow-y: scroll;
-    max-height: 500px;
-} */
+    max-height: 25vh;
+
+}
 
 .container{
     margin: auto;
