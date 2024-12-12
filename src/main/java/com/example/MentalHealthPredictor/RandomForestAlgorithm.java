@@ -10,11 +10,9 @@ import java.util.Random;
 
 public class RandomForestAlgorithm {
     DataSetResponseParser parser;
-    Map<Integer,Set<String>> allChoices;
     RealDecisionTree[] forest;
 
     public RandomForestAlgorithm(DataSetResponseParser p){
-        allChoices = new HashMap<Integer,Set<String>>();
         parser = p;
 
     }
@@ -27,13 +25,13 @@ public class RandomForestAlgorithm {
             colNotUsed = rand.nextInt(parser.getCols() - 1) + 1;
             String[][] dataset = bootStrapData(i, colNotUsed, parser);
             String[] colKey = parser.getSubCol(colNotUsed, parser.getCols());
-            Map<Integer,Set<String>> choices = new HashMap<Integer,Set<String>>(allChoices);
+            Map<Integer,Set<String>> choices = new HashMap<Integer,Set<String>>();
             for(int j = 1,k = 0;j < parser.getCols() - 1;j++,k++){
                 if(k == colNotUsed)k++;
                 Set<String> currChoices = new HashSet<>(parser.getChoices(parser.getQuestion(k)));
-                allChoices.put(j,currChoices);
+                choices.put(j,currChoices);
             }
-            choices.remove(colNotUsed);
+            //choices.remove(colNotUsed);
             forest[i] = new RealDecisionTree(dataset,colKey,choices);
             CurrentSessionReponses sampleIn = new CurrentSessionReponses();
             sampleIn.setTest(parser,i);
@@ -79,15 +77,23 @@ class RealDecisionTree{
     private RealDecisionTreeNode buildDecisionTree(String [][] dataset,Map<Integer,Set<String>> choices){
         String bestChoice = "";
         int bestColumn = 1;
-        double BestInfoGain = 0.0;
+        double BestInfoGain = 0.0, temp = 0.0;
+        Set<String> toBeRemoved = new HashSet<String>() {
+            
+        };
         for(Map.Entry<Integer,Set<String>> Entry: choices.entrySet()){
             for(String choice:Entry.getValue()){
-                double temp = getInfoGain(dataset,Entry.getKey() , choice);
+                temp = getInfoGain(dataset,Entry.getKey() , choice);
                 if(temp > BestInfoGain){
                     BestInfoGain = temp;
                     bestChoice = choice;
                     bestColumn = Entry.getKey();
                 }
+                if(temp == -1.0)toBeRemoved.add(choice);   
+            }
+            if(toBeRemoved.size()>0){
+                for(String remove:toBeRemoved)
+                    Entry.getValue().remove(remove);
             }
         }
         //System.out.println(dataset[0].length + "HERE");
@@ -131,7 +137,23 @@ class RealDecisionTree{
         if(infoGain == 0.0)return infoGain;
         //Calculate index of left and right tables
         double yesLeftC = 0.0,noLeftC = 0.0, yesRightC = 0.0,noRightC = 0.0;
-        for(int i =0;i<dataset.length;i++){
+        if(choice.charAt(0) == '>'){
+            for(int i =0;i<dataset.length;i++){
+                Long curr = Long.valueOf(dataset[i][column]);
+                if(choice.charAt(0) == '>'){
+                    Long choiceIntValue = Long.valueOf(choice.substring(2));
+                    if(curr >= choiceIntValue){
+                        if(dataset[i][0].equals("Yes"))yesLeftC++;
+                        else noLeftC++;
+                    }
+                    else{
+                        if(dataset[i][0].equals("Yes"))yesRightC++;
+                        else noRightC++;
+                    }
+                }
+            }
+        }
+        else for(int i =0;i<dataset.length;i++){
             if(dataset[i][column].equals(choice)){
                 if(dataset[i][0].equals("Yes"))yesLeftC++;
                 else noLeftC++;
@@ -140,6 +162,9 @@ class RealDecisionTree{
                 if(dataset[i][0].equals("Yes"))yesRightC++;
                 else noRightC++;
             }
+        }
+        if(yesLeftC + noLeftC == 0.0 || yesRightC + noRightC == 0.0){
+            return -1.0;
         }
         double indexL = ((yesLeftC / (yesLeftC + noLeftC)) * (1 - (yesLeftC / (yesLeftC + noLeftC)))) + ((noLeftC / (yesLeftC + noLeftC)) * (1 - (noLeftC / (yesLeftC + noLeftC))));
         double indexR = ((yesRightC / (yesRightC + noRightC)) * (1 - (yesRightC / (yesRightC + noRightC)))) + ((noRightC / (yesRightC + noRightC)) * (1 - (noRightC / (yesRightC + noRightC))));

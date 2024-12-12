@@ -92,13 +92,22 @@ public class DataSetResponseParser{
         for(int i = 0;i<data.getNumRows();i++){
             if(data.getRecord(i, predictedVarCol).equals(""))numResponses--;
         }
+        int columnsNotUsed = 0;
+        Set<String> varNotUsed = new HashSet<String>();
+        for(int i =0;i<data.getNumCol();i++){
+            String s = data.getColumnName(i);
+            if(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments") || s.equals("Country")){
+                columnsNotUsed++;
+                varNotUsed.add(s);
+            }
+        }
         //The parsed data array is smaller than the one in SurveyResponse, since 3 columns of data not
         //used in the algorithm get removed, invalid responses are also skipped over
-        parsedData = new String[numResponses][data.getNumCol() - 4];
-        parsedColumnName = new String[data.getNumCol() - 4];
+        parsedData = new String[numResponses][data.getNumCol() - columnsNotUsed];
+        parsedColumnName = new String[data.getNumCol() - columnsNotUsed];
         for(int i =0,x = 0;i < parsedColumnName.length;i++,x++){
             String s = data.getColumnName(x);
-            while(s.equals("Timestamp") || s.equals("treatment")|| s.equals("comments") || s.equals("Country")){
+            while(varNotUsed.contains(s)){
                 x++;
                 s = data.getColumnName(x);
             }
@@ -114,10 +123,10 @@ public class DataSetResponseParser{
                 if(s.equals("Gender")){
                     parsedData[x][y] = sortGender(data.getRecord(i, j));    
                 }
-                else if(s.equals("Age")){
-                    long index = Long.valueOf(data.getRecord(i, j)) % 100;
-                    parsedData[x][y] = Long.toString(index / 10);    
-                }
+                // else if(s.equals("Age")){
+                //     long index = Math.abs(Long.valueOf(data.getRecord(i, j)) % 100);
+                //     parsedData[x][y] = Long.toString(index);    
+                // }
                 else if(s.equals("Mental Ilnness")){
                     parsedData[x][y] = sortMentalIllness(data.getRecord(i, j));
                 }
@@ -126,6 +135,7 @@ public class DataSetResponseParser{
             }
             x++;
         }
+        return;
     }
     public String getQuestion(int num){
         if( num < 0 || num > 21){
@@ -149,8 +159,8 @@ public class DataSetResponseParser{
                 parsedColumnQuestions[i] = "What is your Age?";
                 parsedQuestionChoices.put(parsedColumnQuestions[i],temp);
                 for(int x =0;x< getRows();x++){
-                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(parsedData[x][j]))continue;
-                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(parsedData[x][j]);
+                    if(parsedQuestionChoices.get(parsedColumnQuestions[i]).contains(">="+parsedData[x][j]))continue;
+                    parsedQuestionChoices.get(parsedColumnQuestions[i]).add(">=" + parsedData[x][j]);
                 }
                 break;
                 case "Gender":
@@ -394,6 +404,8 @@ public class DataSetResponseParser{
             case "Cis Female":
                 return "Female";
             case "cis-female/femme":
+                return "Female";
+            case "cis-female/female":
                 return "Female";
             case "Female (cis)":
                 return "Female";

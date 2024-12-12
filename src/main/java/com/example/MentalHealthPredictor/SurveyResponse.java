@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.io.IOException;
 import java.nio.charset.*;
 
-class SurveyResponse{
+public class SurveyResponse{
     List<String> columnHeaders;
     String surveyResponses[][], filename;
     public SurveyResponse(String fname) throws IOException{
@@ -32,19 +32,19 @@ class SurveyResponse{
         
     }
 
-    String getRecord(int row,int col){
+    public String getRecord(int row,int col){
         if(row >= surveyResponses.length || col >= surveyResponses[0].length
            || row < 0 || col < 0)return "INVALID RECORD";
         return surveyResponses[row][col];
     }
-    String getColumnName(int col){
+    public String getColumnName(int col){
         if(col < 0 || col > columnHeaders.size())return "INVALID VARIABLE COLUMN";
         return columnHeaders.get(col);
     }
-    int getNumRows(){
+    public int getNumRows(){
         return surveyResponses.length;
     }
-    int getNumCol(){
+    public int getNumCol(){
         return surveyResponses[0].length;
     }
 }
