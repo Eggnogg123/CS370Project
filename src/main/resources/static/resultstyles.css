@@ -10,9 +10,10 @@ body{
     text-align: center;
 }
 
-.scrollable{
+div.scrollable{
     overflow-y: scroll;
     max-height: 500px;
+
 }
 
 .container{
