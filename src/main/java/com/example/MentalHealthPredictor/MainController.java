@@ -73,6 +73,16 @@ public class MainController {
 			return "survey"; // returns an html file of the same name
 		}//end of GiveSurvey()
 
+	@PostMapping("/submission") //Outputs page that lets user submit a csv file
+		public String userTraining(Model model,@ModelAttribute CurrentSessionReponses user) {// Handles fetching questions and options per question
+			// for(int i=1; i<=parser.getCols()-1; i++){ //this loop automates the process of pulling questions from a source for a specified number of question
+			// 	model.addAttribute("question" + i,parser.getQuestion(i-1));
+			// 	model.addAttribute("options" + i, parser.getChoices(parser.getQuestion(i-1)));
+			// }
+
+			return "userTraining"; // returns an html file of the same name
+		}//end of GiveSurvey()
+
 	
 }// end of class MainController
 

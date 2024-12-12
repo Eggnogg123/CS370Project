@@ -10,6 +10,10 @@ body{
     text-align: center;
 }
 
+.scrollable{
+    overflow-y: auto;
+}
+
 .container{
     margin: auto;
 }
