@@ -15,14 +15,15 @@ public class Feedback {
         userAnswers = c;
         feedbackArr = new String[18];
         feedbackQuestions = new String[18];
-        for(int i =1 ,j = 0;i<22;i++,j++){
+        for(int i =1 ,j = 0;i<23;i++,j++){
             
             while(comparison.getQuestion(i - 1).equals("What is your Age?") ||
             comparison.getQuestion(i - 1).equals("What is your Gender?") ||
             comparison.getQuestion(i - 1).equals("If you live in one of these US States, what is your State of residence? Otherwise put NA.") ||
             comparison.getQuestion(i - 1).equals("Do you have a family history of mental illness?")
             )i++; //Skips first 3 questions excluding country
-            System.out.println(comparison.getQuestion(i - 1));
+            // System.out.println(comparison.getQuestion(i - 1));
+            // System.out.println(i - 1);
             feedbackQuestions[j] = comparison.getQuestion(i - 1);
             feedbackArr[j] =getHealthyPersonValue(i);
             //if(j < 18)System.out.println(feedbackArr[j]);

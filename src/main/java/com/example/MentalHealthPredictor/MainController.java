@@ -55,7 +55,7 @@ public class MainController {
 			/* This section sends out the healthy persons results to the webpage */
 			for(int i=0; i<18; i++){ //this loop automates the process of pulling questions from a source for a specified number of question
 				model.addAttribute("question" + (i + 1),test.getFeedbackQuestion(i));
-				System.out.println(test.getFeedbackQuestion(i));
+				//System.out.println(test.getFeedbackQuestion(i));
 				model.addAttribute("feedback" + (i + 1), test.getFeedbackValue(i));
 			}
 
