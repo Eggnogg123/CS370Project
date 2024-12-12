@@ -11,7 +11,7 @@ body{
 }
 
 div.scrollable{
-    overflow-y: scroll;
+    overflow: scroll;
     max-height: 500px;
 
 }
