@@ -20,8 +20,6 @@ public class MainController {
 		parser = new DataSetResponseParser("survey.csv");
 		alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();
-		
-		System.out.println(parser.getSample(0)[0] + "\n dashodhfiuasfgdsuhgdoshogjsogsd");
 	}
  
 	@GetMapping("/") //gets initial landing page
