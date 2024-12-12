@@ -11,7 +11,8 @@ body{
 }
 
 .scrollable{
-    overflow-y: auto;
+    overflow-y: scroll;
+    max-height: 500px;
 }
 
 .container{
