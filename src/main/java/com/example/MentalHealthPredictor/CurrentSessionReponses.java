@@ -1,5 +1,6 @@
 package com.example.MentalHealthPredictor;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -14,26 +15,47 @@ public class CurrentSessionReponses { /*This is our model class */
     public void setTest(DataSetResponseParser parser,int row){
         String response[] = parser.getSample(row);
         setans1(response[1]);
+        //if(response.length > 2)
         setans2(response[2]);
+        //if(response.length > 3)
         setans3(response[3]);
+        //if(response.length > 4)
         setans4(response[4]);
+        //if(response.length > 5)
         setans5(response[5]);
+        //if(response.length > 6)
         setans6(response[6]);
+        //if(response.length > 7)
         setans7(response[7]);
+        //if(response.length > 8)
         setans8(response[8]);
+        //if(response.length > 9)
         setans9(response[9]);
+        //if(response.length > 10)
         setans10(response[10]);
+        //if(response.length > 11)
         setans11(response[11]);
+        //if(response.length > 12)
         setans12(response[12]);
+        //if(response.length > 13)
         setans13(response[13]);
+        //if(response.length > 14)
         setans14(response[14]);
+        //if(response.length > 15)
         setans15(response[15]);
+        //if(response.length > 16)
         setans16(response[16]);
+        //if(response.length > 17)
         setans17(response[17]);
+        //if(response.length > 18)
         setans18(response[18]);
+        //if(response.length > 19)
         setans19(response[19]);
+        //if(response.length > 20)
         setans20(response[20]);
+        //if(response.length > 21)
         setans21(response[21]);
+        //if(response.length > 22)
         setans22(response[22]);
         setQuestions(parser);
     }

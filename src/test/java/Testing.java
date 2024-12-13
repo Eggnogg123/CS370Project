@@ -248,6 +248,14 @@ class Testing {
         assertEquals("No", l4right.getChoice());
 
     }
+//Test BUILD RandomForest User Requirement
+    @Test   
+    void randomForestALgorithmBuild() throws IOException{
+        DataSetResponseParser p = new DataSetResponseParser("DataSetA.csv");
+        RandomForestAlgorithm alg = new RandomForestAlgorithm(p);
+        alg.buildRandomForest();
+        assertEquals(alg.getNumTrees(), 7);
+    }
 }
 
     

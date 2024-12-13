@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.Random;
 
 public class RandomForestAlgorithm {
-    DataSetResponseParser parser;
-    DecisionTree[] forest;
+    private DataSetResponseParser parser;
+    private DecisionTree[] forest;
 
     public RandomForestAlgorithm(DataSetResponseParser p){
         parser = p;
@@ -40,6 +40,9 @@ public class RandomForestAlgorithm {
             else wrong++;
         }
         System.out.println(correct + " Correct " + wrong + " Wrong");
+    }
+    public int getNumTrees(){
+        return forest.length;
     }
 // All  the bootstrapper does is call the subtable method of the parser and return it
     public String[][] bootStrapData(int rowNotUsed,int colNotUsed,DataSetResponseParser parser){
