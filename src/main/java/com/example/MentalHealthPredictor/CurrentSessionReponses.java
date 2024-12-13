@@ -1,5 +1,6 @@
 package com.example.MentalHealthPredictor;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -139,15 +140,8 @@ public class CurrentSessionReponses { /*This is our model class */
         return ques[index];
     }
 
-    
-
-    // @Override /* This is simply to print out the values the user chooses for each anstion */
-    // public String toString(){
-    //     return "User [ans1=" + ans1 + "]";
-    //     //return "User [ans15=" + ans15 + ", ans22=" + ans22 + "]" ;
-    // }
-
-    // public String toString(){ //gonna try to convert toString to print only the answers we want could be used to send data to other classes
-        
-    // }
+    public void setcsvInput(File filename){ //automatically runs this method anything in the form gets stored
+        System.out.println("blaj");
+        System.exit(0);
+    }
 }
