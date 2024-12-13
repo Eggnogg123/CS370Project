@@ -4,10 +4,16 @@ body{
     background-size: cover;
     font-size: 1.8cqw;
     margin:0;
-    display:grid;
-    justify-content: center; /*center hor*/
-    align-items: center; /* center vert*/
+    display:flex; 
+    flex-direction:column; 
+    justify-content:center;
+    min-height:100vh;
     text-align: center;
+    color:rgb(211, 12, 211);
+}
+
+.bodyobject{
+    margin: 50px;
 }
 
 div.scrollable{
@@ -15,11 +21,14 @@ div.scrollable{
     margin-bottom: 5%;
     overflow-y: scroll;
     max-height: 25vh;
-
+    color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(rgb(8, 155, 223),rgb(211, 12, 211));
+    
 }
 
 .container{
-    margin: auto;
+    /* margin: auto; */
 }
 
 h1{
@@ -39,5 +48,27 @@ h1{
 }
 
 .predictionResult{
+    color: transparent;
+    background-image: linear-gradient(rgb(8, 155, 223),rgb(211, 12, 211));
+    background-clip: text;
     font-size: 70px;
+}
+
+.fileInputContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+input[type="file"]{
+    display: flexbox;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.fileButton{
+    max-width: 100%;
+    max-width: 100%;
 }

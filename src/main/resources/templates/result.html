@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>Results</h1>
-    <div class="results container">
+    <div class="results container bodyobject">
         <p> Thank you for taking our mental health Predictor.<br>
             We have taken a look at your results. You scored...<br>
         </p>
@@ -20,17 +20,12 @@
         <p>Our software is using a Random Forest model to predict your mental health.</p>
         <p>But we also compared you to a person who is confirmed to be mentally healthy. Here are that persons results.</p><br/><br/>
         
-        
-        
         <!--2 links gaurenteed and 18 other links-->
         <a href="https://stackoverflow.com/questions/47903209/how-to-shift-a-block-of-code-left-right-by-one-space-in-vscode">Here is a link</a> 
         <br/>
-
-        
-
     </div>
 
-    <div class = "scrollable">
+    <div class = "scrollable bodyobject">
         <div class="formGridItem">
             <label for="firstquestion" th:text="${question1}">First question: </label><br/>
             <p th:text="${feedback1}">Filler Answer</p>
@@ -121,10 +116,16 @@
             <p th:text="${feedback18}">Filler Answer</p>
         </div><br/> 
     </div>    
-    
-    <label for="fileInput">If you want to train your own random forest. Submit the file and click the button.</label><br/>
-    <input type="file" name="csvInput" accept=".csv"/><br/>
-    <button action ="submission" method="post">Submit</button>
 
+    <div class="fileInputContainer bodyobject">
+        <label for="fileInput" class="fileLabel">If you want to train your own random forest. Submit the file and click the button.</label><br/>
+        <input type="file" name="csvInput" accept=".csv, .pdf" class="fileInput"/><br/>
+        
+    </div>
+
+    <form action ="result" method="post">
+        <button class="fileButton">Submit</button>
+    </form>
+    
 </body>
 </html>
