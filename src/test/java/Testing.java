@@ -256,7 +256,30 @@ class Testing {
         alg.buildRandomForest();
         assertEquals(alg.getNumTrees(), 7);
     }
-//Test 
+//Test BUILD RandomForest survey size 200
+    @Test   
+    void randomForestALgorithmBuildA() throws IOException{
+        DataSetResponseParser p = new DataSetResponseParser("TestsurveyA.csv");
+        RandomForestAlgorithm alg = new RandomForestAlgorithm(p);
+        alg.buildRandomForest();
+        assertEquals(alg.getNumTrees(), 200);
+    }
+//Test BUILD RandomForest survey size 500
+    @Test   
+    void randomForestALgorithmBuildB() throws IOException{
+        DataSetResponseParser p = new DataSetResponseParser("TestsurveyB.csv");
+        RandomForestAlgorithm alg = new RandomForestAlgorithm(p);
+        alg.buildRandomForest();
+        assertEquals(alg.getNumTrees(), 500);
+    }
+//Test BUILD RandomForest survey size 2000
+    @Test   
+    void randomForestALgorithmBuildC() throws IOException{
+        DataSetResponseParser p = new DataSetResponseParser("TestsurveyC.csv");
+        RandomForestAlgorithm alg = new RandomForestAlgorithm(p);
+        alg.buildRandomForest();
+        assertEquals(alg.getNumTrees(), 2000);
+    }
 }
 
     

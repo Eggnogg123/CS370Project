@@ -2,8 +2,10 @@ package com.example.MentalHealthPredictor;
 
 import java.security.KeyStore.Entry;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 public class Feedback {
     private DataSetResponseParser comparison;
@@ -42,40 +44,55 @@ public class Feedback {
     public String getHealthyPersonValue(int index){//Dont care about the prediction right now, only need to get a healthy person from dataset
     
         Random random = new Random();
-        
-        int [] healthylist = new int[10];
-        for(int i =0;i<10;i++){
-            int nextHealthy = random.nextInt(comparison.getRows());
-            while(getSimilar(nextHealthy, i)<10){
-                nextHealthy = random.nextInt(comparison.getRows());
-            }
-            healthylist[i] = nextHealthy;
-        }
+        Set<Integer> healthylist = getSimilar(index);
        //  return getSimilar(healthylist, index);
        Map<String,Integer> answerCount = new HashMap<String,Integer>();
        String mostC = new String();
-       for(int i=0;i<10;i++){
-            String curr = new String(comparison.getSample(healthylist[i])[index]);
+       System.out.print("Used Healthy People at Responses: ");
+       for(int i:healthylist){
+            System.out.print(i + 2 + " ");
+            String curr = new String(comparison.getSample(i)[index]);
             if(!answerCount.containsKey(curr))
                 answerCount.put(curr, 0);
             else answerCount.put(curr, answerCount.get(curr) + 1);
             mostC = curr;
         }
-      
+        System.out.println();
+        
         for(Map.Entry<String, Integer> i:answerCount.entrySet()){
             if(answerCount.get(i.getKey()) > answerCount.get(mostC))mostC = i.getKey();
         }
+        System.out.println(mostC);
         return mostC;
     }//end of getHealthyPerson() method
 
-    private Integer getSimilar(int row, int indexNotUsed){// how many indices are common excluding the ones oyu shouldnt look at
-        Integer ans = 0;
-        String healthyPerson[] = comparison.getSample(row);//gets the data from the person who is healthy
-        if(healthyPerson[0].equals("No"))return 0;
-        String currentUser[] = userAnswers.getasArray();
-        for(int i =0;i<currentUser.length;i++){
-            if(i == indexNotUsed)continue;
-            if(healthyPerson[i].equals(currentUser[i]))ans++;
+    private Set<Integer> getSimilar(int index){// how many indices are common excluding the ones oyu shouldnt look at
+        Set<Integer> ans = new HashSet<Integer>();
+        Map<Integer,Integer> key = new HashMap<Integer,Integer>();
+        for(int i =0;i<comparison.getRows();i++){
+            String user[] = userAnswers.getasArray();
+            String survey[] = comparison.getSample(i);
+            int count = 0;
+            for(int j = 1;j<survey.length;j++){
+                if(j == index)continue;
+                if(user[j-1].equals(survey[j]))count++;
+            }
+            key.put(i,count);
+            if(ans.size() < 10)
+                ans.add(i);
+            else{
+                int min = i;
+                for(Integer k:ans){
+                    if(key.get(k) < key.get(min)){
+                        min = k;
+                    }
+                }
+                if(min != i){
+                    ans.remove(min);
+                    ans.add(i);
+                }
+            }
+
         }
         return ans;
     }
