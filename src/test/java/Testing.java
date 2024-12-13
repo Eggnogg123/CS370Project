@@ -256,6 +256,7 @@ class Testing {
         alg.buildRandomForest();
         assertEquals(alg.getNumTrees(), 7);
     }
+//Test 
 }
 
     
