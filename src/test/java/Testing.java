@@ -132,23 +132,46 @@ class Testing {
         DecisionTree tree = new DecisionTree();
         String table1[][] = { //This is what I want my output to be
             {"Yes","27","1-5","Yes","Female","Yes"},
-            {"Yes","27","6-25","No","Male","No"},
+            {"Yes","33","6-25","No","Male","No"},
             {"No","38","More than 1000","No","Male","Yes"},
-            {"Yes","38","6-25","Yes","Male","Yes"},
-            {"Yes","38","6-25","Yes","Male","No"},
+            {"Yes","43","100-500","Yes","Male","Yes"},
+            {"Yes","24","6-25","Yes","Male","No"},
             {"No","30","1-5","Yes","Female","No"},
-            {"Yes","30","More than 1000","No","Male","Yes"}
+            {"Yes","31","More than 1000","No","Non-Binary","Don't know"}
         };
         Map<Integer,Set<String>> choicesLIST = new HashMap<Integer,Set<String>>();
         Set<String> choice1 = new HashSet<String>();
         choice1.add(">=27");
+        choice1.add(">=33");
+        choice1.add(">=43");
+        choice1.add(">=24");
+        choice1.add(">=31");
         choice1.add(">=38");
         choice1.add(">=30");
+        double max = 0.0;
+        String yes ="";
+        for(String i:choice1){
+            if( tree.getInfoGain(table1, 1, i) > max){
+                 max = tree.getInfoGain(table1, 1, i);
+                 yes = i;
+            }
+        }
+        assertEquals(tree.getInfoGain(table1, 1, ">=30"),max,yes);
         choicesLIST.put(1,choice1);
         Set<String> choice2 = new HashSet<String>();
         choice2.add("1-5");
         choice2.add("6-25");
+        choice2.add("100-500");
         choice2.add("More than 1000");
+        max = 0.0;
+        yes ="";
+        for(String i:choice1){
+            if( tree.getInfoGain(table1, 1, i) > max){
+                 max = tree.getInfoGain(table1, 1, i);
+                 yes = i;
+            }
+        }
+        assertEquals(tree.getInfoGain(table1, 1, ">=30"),max,yes);
         choicesLIST.put(2,choice2);
         Set<String> choice3 = new HashSet<String>();
         choice3.add("Yes");
@@ -157,12 +180,18 @@ class Testing {
         Set<String> choice4 = new HashSet<String>();
         choice4.add("Male");
         choice4.add("Female");
+        choice4.add("Non-Binary");
         choicesLIST.put(4,choice4);
         Set<String> choice5 = new HashSet<String>();
         choice5.add("Yes");
         choice5.add("No");
+        choice5.add("Don't know");
         choicesLIST.put(5,choice5);
         DecisionTreeNode root = tree.buildDecisionTree(table1,choicesLIST);
+        //root = root.getChild("No");
+        //root = root.getChild("19");
+        //assertEquals(0, root.getColumn());
+        //assertEquals("Y", root.getChoice());
     }
 
 }//end class Testing 

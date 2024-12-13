@@ -4,6 +4,8 @@ public class DecisionTreeNode{
     private int column = -1;
     String trueChoice ="ERROR";
     private Boolean prediction = false;
+    private Boolean number = false;
+    Long num = (long) 0;
     DecisionTreeNode trueC,falseC;
 
     public DecisionTreeNode(int c,String choice,DecisionTreeNode TrueC,DecisionTreeNode FalseC){
@@ -23,6 +25,10 @@ public class DecisionTreeNode{
     public void setQuestion(int c,String choice){
         column = c;
         trueChoice = choice;
+        if(trueChoice.charAt(0) == '>'){
+            number = true;
+            num = Long.valueOf(trueChoice.substring(2));
+        }
         return;
     }
     public void setPrediction(String input){
@@ -31,7 +37,11 @@ public class DecisionTreeNode{
         return;
     }
     public DecisionTreeNode getChild(String choice){
-        if(choice.equals(trueChoice))
+        if(number){
+            if(Long.valueOf(choice) >= num)return trueC;
+            return falseC;
+        }
+        else if(choice.equals(trueChoice))
         return trueC;
         else return falseC;
     }
