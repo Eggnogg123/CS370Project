@@ -126,6 +126,50 @@ class Testing {
         correctInfoGain = -1.0;
         assertEquals(df_obj.format(correctInfoGain), df_obj.format(infoGain));
     }
+//Test partitionTable method of DecisionTree
+    @Test
+    void decisionTreePartition(){
+        DecisionTree tree = new DecisionTree();
+        String table1[][] = { //This is what I want my output to be
+            {"Yes","27","1-5","Yes","Female","Yes"},
+            {"Yes","33","6-25","No","Male","No"},
+            {"No","38","More than 1000","No","Male","Yes"},
+            {"Yes","43","100-500","Yes","Male","Yes"},
+            {"Yes","24","6-25","Yes","Male","No"},
+            {"No","30","1-5","Yes","Female","No"},
+            {"Yes","31","More than 1000","No","Non-Binary","Don't know"}
+        };
+        String table2[][] = { //This is what I want my output to be
+            
+            {"Yes","33","6-25","No","Male","No"},
+            {"No","38","More than 1000","No","Male","Yes"},
+            {"Yes","43","100-500","Yes","Male","Yes"},
+            
+            {"No","30","1-5","Yes","Female","No"},
+            {"Yes","31","More than 1000","No","Non-Binary","Don't know"}
+        };
+        String table3[][] = { //This is what I want my output to be
+            {"Yes","27","1-5","Yes","Female","Yes"},
+            {"Yes","24","6-25","Yes","Male","No"},
+        };
+        //Scenario 1
+        assertArrayEquals(table2, tree.partitionTable(table1, 1, ">=30",true));
+        assertArrayEquals(table3, tree.partitionTable(table1, 1, ">=30",false));
+        //Scenario 2
+        String table4[][] = { //This is what I want my output to be
+            {"Yes","33","6-25","No","Male","No"},
+            {"No","38","More than 1000","No","Male","Yes"},
+            {"Yes","31","More than 1000","No","Non-Binary","Don't know"}
+        };
+        String table5[][] = { //This is what I want my output to be
+            {"Yes","27","1-5","Yes","Female","Yes"},
+            {"Yes","43","100-500","Yes","Male","Yes"},
+            {"Yes","24","6-25","Yes","Male","No"},
+            {"No","30","1-5","Yes","Female","No"},
+        };
+        assertArrayEquals(table4, tree.partitionTable(table1, 3, "No",true));
+        assertArrayEquals(table4, tree.partitionTable(table1, 3, "Yes",false));
+    }
 //Test buildDecisionTree method of DecisionTree
     @Test
     void decisionTreeBuild(){
@@ -148,30 +192,12 @@ class Testing {
         choice1.add(">=31");
         choice1.add(">=38");
         choice1.add(">=30");
-        double max = 0.0;
-        String yes ="";
-        for(String i:choice1){
-            if( tree.getInfoGain(table1, 1, i) > max){
-                 max = tree.getInfoGain(table1, 1, i);
-                 yes = i;
-            }
-        }
-        assertEquals(tree.getInfoGain(table1, 1, ">=30"),max,yes);
         choicesLIST.put(1,choice1);
         Set<String> choice2 = new HashSet<String>();
         choice2.add("1-5");
         choice2.add("6-25");
         choice2.add("100-500");
         choice2.add("More than 1000");
-        max = 0.0;
-        yes ="";
-        for(String i:choice1){
-            if( tree.getInfoGain(table1, 1, i) > max){
-                 max = tree.getInfoGain(table1, 1, i);
-                 yes = i;
-            }
-        }
-        assertEquals(tree.getInfoGain(table1, 1, ">=30"),max,yes);
         choicesLIST.put(2,choice2);
         Set<String> choice3 = new HashSet<String>();
         choice3.add("Yes");
@@ -187,15 +213,41 @@ class Testing {
         choice5.add("No");
         choice5.add("Don't know");
         choicesLIST.put(5,choice5);
+
         DecisionTreeNode root = tree.buildDecisionTree(table1,choicesLIST);
-        //root = root.getChild("No");
-        //root = root.getChild("19");
-        //assertEquals(0, root.getColumn());
-        //assertEquals("Y", root.getChoice());
+        //TEST THE TREE BELOW
+        assertEquals(1, root.getColumn());
+        assertEquals(">=30", root.getChoice());
+        //Level-1
+        DecisionTreeNode l1left = root.getChild("30");
+        DecisionTreeNode l1right = root.getChild("29");
+        assertEquals(1, l1left.getColumn());
+        assertEquals(">=31", l1left.getChoice());
+        assertEquals(-1, l1right.getColumn());
+        assertEquals("Yes", l1right.getChoice());
+        //Level-2
+        DecisionTreeNode l2left = l1left.getChild("31");
+        DecisionTreeNode l2right = l1left.getChild("30");
+        assertEquals(1, l2left.getColumn());
+        assertEquals(">=38", l2left.getChoice());
+        assertEquals(-1, l2right.getColumn());
+        assertEquals("No", l2right.getChoice());
+        //Level-3
+        DecisionTreeNode l3left = l2left.getChild("38");
+        DecisionTreeNode l3right = l2left.getChild("37");
+        assertEquals(1, l3left.getColumn());
+        assertEquals(">=43", l3left.getChoice());
+        assertEquals(-1, l3right.getColumn());
+        assertEquals("Yes", l3right.getChoice());
+        //Level-4
+        DecisionTreeNode l4left = l3left.getChild("43");
+        DecisionTreeNode l4right = l3left.getChild("42");
+        assertEquals(-1, l4left.getColumn());
+        assertEquals("Yes", l4left.getChoice());
+        assertEquals(-1, l4right.getColumn());
+        assertEquals("No", l4right.getChoice());
+
     }
+}
 
-}//end class Testing 
     
-
-
-

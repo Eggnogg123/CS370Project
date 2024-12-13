@@ -48,28 +48,17 @@ public class DecisionTree{
             if(toBeRemoved.size()>0){
                 for(String remove:toBeRemoved)
                     Entry.getValue().remove(remove);
+                toBeRemoved.clear();
             }
         }
         //Set the current node to a leaf
         if(BestInfoGain == 0.0)
             return isPredictionNode(dataset);
-        int countChoice = 0;
-        //Now Create two partitioned tables as input for each child
-        for(int i =0;i < dataset.length;i++){
-            if(dataset[i][bestColumn].equals(bestChoice))countChoice++;
-        }
-        String trueArr[][] = new String[countChoice][dataset[0].length];
-        String falseArr[][] = new String[dataset.length - countChoice][dataset[0].length];
-        for(int i =0,trueC = 0,falseC = 0;i<dataset.length;i++){
-            if(dataset[i][bestColumn].equals(bestChoice)){
-                trueArr[trueC] = dataset[i];
-                trueC++;
-            }
-            else{
-                falseArr[falseC] = dataset[i];
-                falseC++;
-            }
-        }
+        //Now Create two partitioned tables as input for each child, Special cases for age indicated by '>'
+        
+        String trueArr[][] = partitionTable(dataset, bestColumn, bestChoice,true);
+        String falseArr[][] = partitionTable(dataset, bestColumn, bestChoice,false);
+    
         Map<Integer,Set<String>> choicesN = new HashMap<Integer,Set<String>>(choices);
         choicesN.get(bestColumn).remove(bestChoice);
         //Create two Partitioned choices
@@ -77,6 +66,47 @@ public class DecisionTree{
         DecisionTreeNode falseN = buildDecisionTree(falseArr, choicesN);
         return new DecisionTreeNode(bestColumn,bestChoice,trueN,falseN);
     }
+//This method partitions the data into the true  or false subset
+    public String[][] partitionTable(String[][] dataset,int bestColumn, String bestChoice,boolean indic){
+        int countChoice = 0;
+        if(bestChoice.charAt(0) == '>'){
+            for(int i =0;i < dataset.length;i++){
+                if(Long.valueOf(dataset[i][bestColumn]) >= Long.valueOf(bestChoice.substring(2)))countChoice++;
+            }
+        }
+        else 
+            for(int i =0;i < dataset.length;i++){
+                if(dataset[i][bestColumn].equals(bestChoice))countChoice++;
+            }
+        String trueArr[][] = new String[countChoice][dataset[0].length];
+        String falseArr[][] = new String[dataset.length - countChoice][dataset[0].length];
+        if(bestChoice.charAt(0) == '>'){
+            for(int i =0,trueC = 0,falseC = 0;i<dataset.length;i++){
+                if(Long.valueOf(dataset[i][bestColumn]) >= Long.valueOf(bestChoice.substring(2))){
+                    trueArr[trueC] = dataset[i];
+                    trueC++;
+                }
+                else{
+                    falseArr[falseC] = dataset[i];
+                    falseC++;
+                }
+            }
+        }
+        else
+            for(int i =0,trueC = 0,falseC = 0;i<dataset.length;i++){
+                if(dataset[i][bestColumn].equals(bestChoice)){
+                    trueArr[trueC] = dataset[i];
+                    trueC++;
+                }
+                else{
+                    falseArr[falseC] = dataset[i];
+                    falseC++;
+                }
+            }
+            if(indic)return trueArr;
+            return falseArr;
+    }
+    
     public String[] getColKey(){
         return columnKey;
     }

@@ -9,6 +9,10 @@ public class DecisionTreeNode{
     DecisionTreeNode trueC,falseC;
 
     public DecisionTreeNode(int c,String choice,DecisionTreeNode TrueC,DecisionTreeNode FalseC){
+        if(choice.charAt(0) == '>'){
+            number = true;
+            num = Long.valueOf(choice.substring(2));
+        }
         trueC = TrueC;
         falseC = FalseC;
         column = c;
