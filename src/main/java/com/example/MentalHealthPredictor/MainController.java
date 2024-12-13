@@ -85,9 +85,8 @@ public class MainController {
 		public String userTraining(Model model,@ModelAttribute CurrentSessionReponses user) throws IOException {// Handles fetching questions and options per question
 			newData(user);
 
-			return "userTraining"; // returns an html file of the same name
+			return "landingpage"; // returns an html file of the same name
 		}//end of GiveSurvey()
 
-	
 }// end of class MainController
 
