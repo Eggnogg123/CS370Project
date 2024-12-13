@@ -14,49 +14,42 @@ public class CurrentSessionReponses { /*This is our model class */
 
     public void setTest(DataSetResponseParser parser,int row){
         String response[] = parser.getSample(row);
-        setans1(response[1]);
-        //if(response.length > 2)
-        setans2(response[2]);
-        //if(response.length > 3)
-        setans3(response[3]);
-        //if(response.length > 4)
-        setans4(response[4]);
-        //if(response.length > 5)
-        setans5(response[5]);
-        //if(response.length > 6)
-        setans6(response[6]);
-        //if(response.length > 7)
-        setans7(response[7]);
-        //if(response.length > 8)
-        setans8(response[8]);
-        //if(response.length > 9)
-        setans9(response[9]);
-        //if(response.length > 10)
-        setans10(response[10]);
-        //if(response.length > 11)
-        setans11(response[11]);
-        //if(response.length > 12)
-        setans12(response[12]);
-        //if(response.length > 13)
-        setans13(response[13]);
-        //if(response.length > 14)
-        setans14(response[14]);
-        //if(response.length > 15)
-        setans15(response[15]);
-        //if(response.length > 16)
-        setans16(response[16]);
-        //if(response.length > 17)
-        setans17(response[17]);
-        //if(response.length > 18)
-        setans18(response[18]);
-        //if(response.length > 19)
-        setans19(response[19]);
-        //if(response.length > 20)
-        setans20(response[20]);
-        //if(response.length > 21)
-        setans21(response[21]);
-        //if(response.length > 22)
-        setans22(response[22]);
+        for(int i = 1;i<response.length;i++){
+            if(i == 1){
+                try {
+                    long index = (Long.valueOf(response[i]) % 100) / 10;
+                    ans.put("0", Long.toString(index));
+                } catch (NumberFormatException e) {
+                    ans.put("0","0");
+                } 
+                feedbackans[i-1] = response[i];
+            }
+            else if (i== 5){
+                if(response[5].equals("Don't Know")){
+                    Random rand = new Random();
+                    int check = rand.nextInt() % 2;
+                    if(check == 0)ans.put("4", "Yes");
+                    else ans.put("4", "No");
+                }
+                else ans.put("4", response[i]);
+                feedbackans[i - 1] = response[i];
+            }
+            else if (i == 8){
+                if(response[8].equals("Don't Know")){
+                    Random rand = new Random();
+                    int check = rand.nextInt() % 2;
+                    if(check == 0)ans.put("7", "Yes");
+                    else ans.put("7", "No");
+                }
+                ans.put("7", response[8]);
+                feedbackans[i -1 ] = response[8];
+            }
+            else{
+                ans.put(Integer.toString(i-1),response[i]);
+                feedbackans[i-1] = response[i];
+            }
+            
+        }
         setQuestions(parser);
     }
     //Dont change 
@@ -136,7 +129,7 @@ public class CurrentSessionReponses { /*This is our model class */
         return ans.get(question);
     }
     public void setQuestions(DataSetResponseParser input){
-        for(int i =0;i<22;i++){
+        for(int i =0;i<input.getCols() - 1;i++){
             ques[i] = input.getQuestion(i);
             ans.put(ques[i], ans.get(Integer.toString(i)));
             //System.out.println(ques[i]);
