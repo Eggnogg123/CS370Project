@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Map;
+import java.io.File;
 import java.io.IOException;
 
 
@@ -30,6 +31,18 @@ public class DataSetResponseParser{
         }
         parseResponse();
         buildQuestionsChoices(parsedColumnName.length - 1);          
+    }
+    public DataSetResponseParser(File filename) throws IOException{
+        data = new SurveyResponse(filename);
+        numResponses = data.getNumRows();
+        for(int i =0;i<data.getNumCol();i++){
+            if(data.getColumnName(i).equals("Mental Ilnness")){
+                predictedVarCol = i;
+                break;
+            }
+        }
+        parseResponse();
+        buildQuestionsChoices(parsedColumnName.length - 1); 
     }
 
     public String[][] getParsedData(){ //Returns the 2d array of the parsed data.

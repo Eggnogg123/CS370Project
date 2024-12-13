@@ -1,6 +1,7 @@
 package com.example.MentalHealthPredictor;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,7 +12,7 @@ public class CurrentSessionReponses { /*This is our model class */
     private Map<String,String> ans = new HashMap<String,String>();
     private String feedbackans[] = new String[22];
     private String ques[] = new String[22];
-    
+    File filename;
 
     public void setTest(DataSetResponseParser parser,int row){
         String response[] = parser.getSample(row);
@@ -140,8 +141,10 @@ public class CurrentSessionReponses { /*This is our model class */
         return ques[index];
     }
 
-    public void setcsvInput(File filename){ //automatically runs this method anything in the form gets stored
-        System.out.println("blaj");
-        System.exit(0);
+    public void setcsvInput(File file) throws IOException{ //automatically runs this method anything in the form gets stored
+        filename = file;
+    }
+    public File getFile(){
+        return filename;
     }
 }

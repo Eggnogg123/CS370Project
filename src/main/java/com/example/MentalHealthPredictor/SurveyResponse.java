@@ -4,6 +4,7 @@ import org.apache.commons.csv.*;
 import java.util.List;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.*;
 
@@ -30,6 +31,29 @@ public class SurveyResponse{
             }
         }
         
+    }
+
+    public SurveyResponse(File filename) throws IOException{
+        // if(!filename.exists()){
+        //     System.out.println(filename.getPath());
+        //     System.out.println(System.getProperty("user.dir"));
+        //     System.exit(0);
+        // }
+        String documentsPath = System.getProperty("user.dir")  ;
+        Path documentsDirectory = Paths.get(documentsPath,"src/main/resources/static");
+        Path csvPath = documentsDirectory.resolve(filename.getPath());
+        CSVParser csvParser = CSVParser.parse(csvPath,Charset.defaultCharset(),CSVFormat.EXCEL.withHeader());
+        columnHeaders = csvParser.getHeaderNames();
+        
+
+        List<CSVRecord> records = csvParser.getRecords();
+        surveyResponses = new String[records.size()][records.get(0).size()];
+        for(int i =0;i<records.size();i++){
+            CSVRecord curr = records.get(i);
+            for(int j =0;j<records.get(i).size();j++){
+                surveyResponses[i][j] = curr.get(j);
+            }
+        }
     }
 
     public String getRecord(int row,int col){

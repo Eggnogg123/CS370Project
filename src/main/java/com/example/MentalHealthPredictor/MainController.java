@@ -1,5 +1,6 @@
 package com.example.MentalHealthPredictor;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,13 @@ public class MainController {
 
 	public MainController() throws IOException{
 		parser = new DataSetResponseParser("survey.csv");
+		alg = new RandomForestAlgorithm(parser);
+		alg.buildRandomForest();
+	}
+
+	public void newData(CurrentSessionReponses in) throws IOException{
+		File filename = in.getFile();
+		parser = new DataSetResponseParser(filename);
 		alg = new RandomForestAlgorithm(parser);
 		alg.buildRandomForest();
 	}
@@ -74,11 +82,8 @@ public class MainController {
 		}//end of GiveSurvey()
 
 	@PostMapping("/submission") //Outputs page that lets user submit a csv file
-		public String userTraining(Model model,@ModelAttribute CurrentSessionReponses user) {// Handles fetching questions and options per question
-			// for(int i=1; i<=parser.getCols()-1; i++){ //this loop automates the process of pulling questions from a source for a specified number of question
-			// 	model.addAttribute("question" + i,parser.getQuestion(i-1));
-			// 	model.addAttribute("options" + i, parser.getChoices(parser.getQuestion(i-1)));
-			// }
+		public String userTraining(Model model,@ModelAttribute CurrentSessionReponses user) throws IOException {// Handles fetching questions and options per question
+			newData(user);
 
 			return "userTraining"; // returns an html file of the same name
 		}//end of GiveSurvey()
