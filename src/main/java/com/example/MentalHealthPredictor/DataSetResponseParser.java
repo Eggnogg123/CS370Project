@@ -35,7 +35,9 @@ public class DataSetResponseParser{
     public String[][] getParsedData(){ //Returns the 2d array of the parsed data.
         return parsedData;
     }
-
+    public String[] getParsedColumnName(){ //Returns the 2d array of the parsed data.
+        return parsedColumnName;
+    }
     public String[] getSample(int row){
         return parsedData[row];
     }
@@ -77,7 +79,7 @@ public class DataSetResponseParser{
 //Column 0 is the Mentall Illness Column, IF WE CHANGE THE ORDER OF THE SURVEY FILE VARIABLES THIS MAY BREAK
     public String[] getSubCol(int featureSelectedOut, int cols){
         String[] table = new String[cols - 1];
-        table[0] = "Mental Illness";
+        table[0] = "Mental Ilness";
         for(int i =1,j = 0 ;i<cols - 1;i++,j++){
             if(j == featureSelectedOut){
                 j++;
