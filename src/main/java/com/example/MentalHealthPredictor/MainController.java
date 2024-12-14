@@ -58,7 +58,11 @@ public class MainController {
 				model.addAttribute("question" + (i + 1),test.getFeedbackQuestion(i));
 				model.addAttribute("feedback" + (i + 1), test.getFeedbackValue(i));
 			}
+			model.addAttribute("link1", "https://www.youtube.com/");
+			model.addAttribute("link12", "https://www.youtube.com/");
 
+			model.addAttribute("link2", "https://www.t-mobile.com/cell-phones/brand/apple?cmpid=MGPO_PAM_P_EVGRNIPHN_dstrackerid_126337501317050368&mfadid=adm");
+			model.addAttribute("link22", "https://www.youtube.com/");
 
 			return "result";
 		}//end of FeedbackResults()
