@@ -67,6 +67,7 @@ public class Feedback {
         for(int i =0;i<comparison.getRows();i++){
             String user[] = userAnswers.getasArray();
             String survey[] = comparison.getSample(i);
+            if(survey[0].equals("Yes"))continue;
             int count = 0;
             for(int j = 1;j<survey.length;j++){
                 if(j == index)continue;
