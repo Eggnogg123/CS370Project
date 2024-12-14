@@ -2,8 +2,6 @@ package com.example.MentalHealthPredictor;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,13 +36,8 @@ public class MainController {
 	@PostMapping("/feedback") //outputs feedback and result page
 		public String FeedbackResults(Model model, @ModelAttribute CurrentSessionReponses user) { //links to model class which is Greeting.java
 			String predictionforWebpage = ""; //The actual prediction is YES or NO so to make it more traditional we will output it as NEGATIVE or POSITIVE
-			
-			// for(int i=0;i<23;i++){ //prints out users inputs just to make sure it works 
-			// 	System.out.println(user.getAnswer(Integer.toString(i)));
-			// }
 
 			user.setQuestions(parser); //Makes sure whatever the user inputs is stored
-			//System.out.println(alg.makePrediction(user));
 
 			/* This section sends out the predictions and its accompanying definition to the webpage*/
 			if(alg.makePrediction(user).equals("YES")){
@@ -63,7 +56,6 @@ public class MainController {
 			/* This section sends out the healthy persons results to the webpage */
 			for(int i=0; i<18; i++){ //this loop automates the process of pulling questions from a source for a specified number of question
 				model.addAttribute("question" + (i + 1),test.getFeedbackQuestion(i));
-				//System.out.println(test.getFeedbackQuestion(i));
 				model.addAttribute("feedback" + (i + 1), test.getFeedbackValue(i));
 			}
 

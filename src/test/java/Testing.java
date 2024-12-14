@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,6 +21,41 @@ import com.example.MentalHealthPredictor.SurveyResponse;
 class Testing {
     DataSetResponseParser p;
     SurveyResponse a;
+    //Test SurveyResponse
+    @Test
+    void surveyResponseTest() throws IOException{
+        SurveyResponse scenA = new SurveyResponse("DataSetA.csv");
+        SurveyResponse scenB = new SurveyResponse("DataSetB.csv");
+        String table1[][] = { //This is what I want my output to be
+            {"Often","27","1-5","Yes","Cis Female","Yes"},
+            {"Sometimes","33","6-25","No","Cis Male","No"},
+            {"NA","38","More than 1000","No","cis male","Yes"},
+            {"Sometimes","43","100-500","Yes","Cis Male","Yes"},
+            {"Sometimes","24","6-25","Yes","Cis Man","No"},
+            {"NA","30","1-5","Yes","cis-female/female","No"},
+            {"Never","31","More than 1000","No","Enby","Don't know"}
+        };
+        List<String> header1 = new LinkedList<String>();
+        header1.add("Mental Ilnness");
+        header1.add("Age");
+        header1.add("no_employees");
+        header1.add("remote_work");
+        header1.add("Gender");
+        header1.add("benefits");
+        assertArrayEquals(table1, scenA.surveyResponses);
+        assertIterableEquals(header1, scenA.columnHeaders); // both inputs have the same headers
+        String table2[][] = { //This is what I want my output to be
+            {"Often","27","1-5","Yes","Cis Female","Yes"},
+            {"Sometimes","33","6-25","No","Cis Male",""},
+            {"NA","38","More than 1000","No","cis male","Yes"},
+            {"Sometimes","43","100-500","","Cis Male","Yes"},
+            {"Sometimes","24","","Yes","Cis Man","No"},
+            {"NA","30","1-5","Yes","cis-female/female",""},
+            {"Never","","More than 1000","No","Enby",""}
+        };
+        assertArrayEquals(table2, scenB.surveyResponses);
+        assertIterableEquals(header1, scenB.columnHeaders);
+    }
     //Test the parseResponse and getSubCol
     @Test
     void parserTestA() throws IOException{ //
@@ -271,6 +308,14 @@ class Testing {
         RandomForestAlgorithm alg = new RandomForestAlgorithm(p);
         alg.buildRandomForest();
         assertEquals(alg.getNumTrees(), 500);
+    }
+//Test BUILD RandomForest survey size 1259
+    @Test   
+    void randomForestALgorithmBuildActual() throws IOException{
+        DataSetResponseParser p = new DataSetResponseParser("survey.csv");
+        RandomForestAlgorithm alg = new RandomForestAlgorithm(p);
+        alg.buildRandomForest();
+        assertEquals(alg.getNumTrees(), 1259);
     }
 //Test BUILD RandomForest survey size 2000
     @Test   

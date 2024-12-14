@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.nio.charset.*;
 
 public class SurveyResponse{
-    List<String> columnHeaders;
-    String surveyResponses[][], filename;
+    public List<String> columnHeaders;
+    public String surveyResponses[][];
+    String filename;
     public SurveyResponse(String fname) throws IOException{
         String documentsPath = System.getProperty("user.dir")  ;
         filename = fname;
@@ -34,11 +35,6 @@ public class SurveyResponse{
     }
 
     public SurveyResponse(File filename) throws IOException{
-        // if(!filename.exists()){
-        //     System.out.println(filename.getPath());
-        //     System.out.println(System.getProperty("user.dir"));
-        //     System.exit(0);
-        // }
         String documentsPath = System.getProperty("user.dir")  ;
         Path documentsDirectory = Paths.get(documentsPath,"src/main/resources/static");
         Path csvPath = documentsDirectory.resolve(filename.getPath());

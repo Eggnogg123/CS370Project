@@ -138,10 +138,6 @@ public class DataSetResponseParser{
                 if(s.equals("Gender")){
                     parsedData[x][y] = sortGender(data.getRecord(i, j));    
                 }
-                // else if(s.equals("Age")){
-                //     long index = Math.abs(Long.valueOf(data.getRecord(i, j)) % 100);
-                //     parsedData[x][y] = Long.toString(index);    
-                // }
                 else if(s.equals("Mental Ilnness")){
                     parsedData[x][y] = sortMentalIllness(data.getRecord(i, j));
                 }

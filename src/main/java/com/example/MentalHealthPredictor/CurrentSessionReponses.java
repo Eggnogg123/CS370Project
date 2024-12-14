@@ -2,7 +2,6 @@ package com.example.MentalHealthPredictor;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -122,7 +121,6 @@ public class CurrentSessionReponses { /*This is our model class */
         feedbackans[20] = ans21;}
     public void setans22(String ans22){ans.put("21", ans22);
         feedbackans[21] = ans22;}
-    // public void setans23(String ans23){ans.put("22", ans23);}
 
     public String[] getasArray(){
         return feedbackans;
@@ -134,7 +132,6 @@ public class CurrentSessionReponses { /*This is our model class */
         for(int i =0;i<input.getCols() - 1;i++){
             ques[i] = input.getQuestion(i);
             ans.put(ques[i], ans.get(Integer.toString(i)));
-            //System.out.println(ques[i]);
         }
     }
     public String getQuestion(int index){
