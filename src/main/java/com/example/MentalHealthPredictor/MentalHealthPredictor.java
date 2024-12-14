@@ -1,9 +1,6 @@
 package com.example.MentalHealthPredictor;
 
 import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.io.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
